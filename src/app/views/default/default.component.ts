@@ -4,7 +4,7 @@ import { IBlock } from 'src/models/block.model';
 @Component({
   selector: 'app-default',
   templateUrl: './default.component.html',
-  styleUrls: ['./default.component.sass']
+  styleUrls: ['./default.component.scss']
 })
 export class DefaultComponent {
   public blocks: Array<IBlock>;
