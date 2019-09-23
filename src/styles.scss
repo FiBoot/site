@@ -1,4 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'styles/default.scss';
+
 html,
 body {
   height: 100%;
@@ -6,5 +7,10 @@ body {
   padding: 0;
 }
 body {
-  background-color: #111 !important;
+  background-color: $black !important;
+  color: $white !important;
+}
+
+* {
+  transition: all .1s linear;
 }

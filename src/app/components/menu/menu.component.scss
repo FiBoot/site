@@ -2,7 +2,23 @@
 
 .menu {
   position: fixed;
-  width: $menu;
+  width: $menu - $margin;
   height: 100%;
-  background-color: $grey;
+  background-color: $lblack;
+
+  .button {
+    width: $button;
+    height: $button;
+    margin: $margin;
+    background-color: $black;
+    border-radius: $margin;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $grey;
+    }
+    &:active {
+      background-color: $lgrey;
+    }
+  }
 }

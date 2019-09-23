@@ -11,11 +11,8 @@ export class DefaultComponent {
 
   constructor() {
     this.blocks = [
-      { title: 'test1', description: 'description 1', link: '/test' },
-      { title: 'test1', description: 'description 1', link: '/test' },
-      { title: 'test1', description: 'description 1', link: '/test' },
-      { title: 'test1', description: 'description 1', link: '/test' },
-      { title: 'test1', description: 'description 1', link: '/test' }
+      { title: 'APPS', description: 'Canvas applications', link: 'apps' },
+      { title: 'Test', description: 'test', link: 'test' },
     ];
   }
 }
