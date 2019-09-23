@@ -134,6 +134,17 @@ describe('UtilsService', () => {
     });
   });
 
+  describe('hypotenuse', () => {
+    it('should be 0 for same point', () => {
+      const result = Utils.hypotenuse(1, 2, 1, 2);
+      expect(result).toEqual(0);
+    });
+    it('should return correct value', () => {
+      const result = Utils.hypotenuse(5, 8, 1, 3);
+      expect(result).toEqual(6.4031242374328485);
+    });
+  });
+
   describe('isInCircle', () => {
     it('should be inside circle', () => {
       const result = Utils.isInCircle(5, 1, 4, 2, 2);
