@@ -1,0 +1,8 @@
+@import '../../../styles/default.scss';
+
+.menu {
+  position: fixed;
+  width: $menu;
+  height: 100%;
+  background-color: $grey;
+}
