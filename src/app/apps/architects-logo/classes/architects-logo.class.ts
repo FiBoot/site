@@ -1,6 +1,6 @@
 import OpenSimplexNoise from 'open-simplex-noise';
 import { Canvas } from 'src/app/classes/canvas.class';
-import { Utils } from 'src/app/services/utils/utils.service';
+import { Utils } from 'src/app/classes/utils/utils.class';
 
 export class ArchitectsLogo extends Canvas {
   readonly CIRCLE_SIZE_RATIO: number = 1 / 5;
@@ -13,7 +13,7 @@ export class ArchitectsLogo extends Canvas {
   public terraformThreshold = 3;
 
   constructor(wrapper: HTMLDivElement) {
-    super({ wrapper, maxWidth: 1000, unitsPerLine: 100, playerOption: { timespan: 100 } });
+    super({ wrapper, name: 'Architects-logo', maxWidth: 1000, unitsPerLine: 100, looperOption: { timespan: 100 } });
 
     this.start();
   }

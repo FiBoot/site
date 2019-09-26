@@ -1,4 +1,4 @@
-import { Utils } from 'src/app/services/utils/utils.service';
+import { Utils } from 'src/app/classes/utils/utils.class';
 
 const MAX_VERTICES = 256;
 

@@ -1,4 +1,4 @@
-import { Utils } from './utils.service';
+import { Utils } from './utils.class';
 
 describe('UtilsService', () => {
   describe('random', () => {

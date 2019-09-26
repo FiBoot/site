@@ -1,6 +1,3 @@
-import { Injectable } from '@angular/core';
-
-@Injectable()
 export class Utils {
   /**
    * Return random number with Math from 0 to max (excluded)

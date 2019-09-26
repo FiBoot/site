@@ -1,19 +1,21 @@
-import { Logger } from '../services/logger/logger.class';
-import { Utils } from '../services/utils/utils.service';
+import { Logger } from './logger.class';
 import { Looper, ILooperOptions } from './looper.class';
+import { Utils } from './utils/utils.class';
 
 const DEFAULT_UNITS_PER_LINE = 20;
 const DEFAULT_MAX_CANVAS_WIDTH = 600;
 
 export class ICanvasOptions {
   wrapper: HTMLDivElement;
+  name?: string;
   unitsPerLine?: number;
   maxWidth?: number;
-  playerOption?: ILooperOptions;
+  looperOption?: ILooperOptions;
 }
 
 export class Canvas extends Looper {
   private _wrapper: HTMLDivElement;
+  private _name: string;
   private _canvas: HTMLCanvasElement;
   private _render: CanvasRenderingContext2D;
 
@@ -24,16 +26,18 @@ export class Canvas extends Looper {
 
   constructor({
     wrapper,
+    name = '',
     unitsPerLine = DEFAULT_UNITS_PER_LINE,
     maxWidth = DEFAULT_MAX_CANVAS_WIDTH,
-    playerOption = {}
+    looperOption = {}
   }: ICanvasOptions) {
-    super(playerOption);
+    super(looperOption);
     this._wrapper = wrapper;
+    this._name = name;
     this._unitsPerLine = unitsPerLine;
     this._maxWidth = maxWidth;
 
-    Logger.log(`Canvas initialized with ${Utils.fixed(1000 / this._timespan, 2)} frames per second`);
+    Logger.info(`Canvas ${this._name} initialized with ${Utils.fixed(1000 / this._timespan, 2)} frames per second.`);
 
     // create canvas
     this._canvas = document.createElement('canvas');
@@ -61,6 +65,7 @@ export class Canvas extends Looper {
   public destory(): void {
     this.stop();
     this._wrapper.removeChild(this._canvas);
+    Logger.info(`Canvas ${this._name} destroyed.`);
   }
 
   startCB() {

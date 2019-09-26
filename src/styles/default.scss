@@ -1,14 +1,2 @@
-// color
-$black: #111;
-$lblack: #333;
-$grey: #555;
-$lgrey: #888;
-
-$white: #eee;
-
-// width
-$border: .1rem;
-$margin: .3rem;
-$padding: 1rem;
-$button: 3rem;
-$menu: 4rem;
+@import './colors.scss';
+@import './widths.scss';

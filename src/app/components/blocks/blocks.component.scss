@@ -6,11 +6,11 @@
 .block {
   padding: 2 * $padding 0;
   text-align: center;
-  background-color: $lblack;
-  color: $white;
+  background-color: $blockColor;
+  color: $textColor;
   cursor: pointer;
 
   &:hover {
-    background-color: $grey;
+    background-color: $hoverColor;
   }
 }

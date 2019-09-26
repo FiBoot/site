@@ -4,21 +4,21 @@
   position: fixed;
   width: $menu - $margin;
   height: 100%;
-  background-color: $lblack;
+  background-color: $blockColor;
 
   .button {
     width: $button;
     height: $button;
     margin: $margin;
-    background-color: $black;
+    background-color: $backgroundColor;
     border-radius: $margin;
     cursor: pointer;
 
     &:hover {
-      background-color: $grey;
+      background-color: $hoverColor;
     }
     &:active {
-      background-color: $lgrey;
+      background-color: $activeColor;
     }
   }
 }
