@@ -37,7 +37,7 @@ export class Canvas extends Looper {
     this._unitsPerLine = unitsPerLine;
     this._maxWidth = maxWidth;
 
-    Logger.info(`Canvas ${this._name} initialized with ${Utils.fixed(1000 / this._timespan, 2)} frames per second.`);
+    Logger.info(`[Canvas] ${this._name} initialized with ${Utils.fixed(1000 / this._timespan, 2)} frames per second.`);
 
     // create canvas
     this._canvas = document.createElement('canvas');
@@ -65,7 +65,7 @@ export class Canvas extends Looper {
   public destory(): void {
     this.stop();
     this._wrapper.removeChild(this._canvas);
-    Logger.info(`Canvas ${this._name} destroyed.`);
+    Logger.info(`[Canvas] ${this._name} destroyed.`);
   }
 
   startCB() {
@@ -74,6 +74,11 @@ export class Canvas extends Looper {
 
   public clear(): void {
     this._render.clearRect(0, 0, this._size, this._size);
+  }
+
+  public drawUnit(x: number, y: number, color: string | CanvasGradient | CanvasPattern): void {
+    this._render.fillStyle = color;
+    this._render.fillRect(Math.floor(x * this.us), Math.floor(y * this.us), Math.ceil(this.us), Math.ceil(this.us))
   }
 
   private sizeCanvas(): void {

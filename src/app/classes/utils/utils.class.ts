@@ -1,3 +1,5 @@
+import { Logger } from '../logger.class';
+
 export class Utils {
   /**
    * Return random number with Math from 0 to max (excluded)
@@ -97,20 +99,15 @@ export class Utils {
   }
 
   /**
-   * Return the number between limit 0 - max
+   * Return the number between limit [min=0] - [max]
    *
-   * @static
-   * @param {number} num
-   * @param {number} [max=0]
+   * @param {number} num given number
+   * @param {number} [max]
    * @param {number} [min=0]
    * @returns {number}
-   * @memberof Utils
    */
-  public static reduce(num: number, max: number = 0, min: number = 0): number {
-    if (min > max) {
-      throw new Error(`Utils.contain error: min (${min}) > max (${max})`);
-    }
-    return num > min ? (max > 0 ? (num < max ? num : max) : num) : min;
+  public static reduce(num: number, max: number, min: number = 0): number {
+    return min > max ? num : num > min ? (max > 0 ? (num < max ? num : max) : num) : min;
   }
 
   /**

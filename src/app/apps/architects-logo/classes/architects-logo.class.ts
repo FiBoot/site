@@ -13,7 +13,7 @@ export class ArchitectsLogo extends Canvas {
   public terraformThreshold = 3;
 
   constructor(wrapper: HTMLDivElement) {
-    super({ wrapper, name: 'Architects-logo', maxWidth: 1000, unitsPerLine: 100, looperOption: { timespan: 100 } });
+    super({ wrapper, name: 'Architects-logo', maxWidth: 1000, unitsPerLine: 100 });
 
     this.start();
   }
@@ -39,12 +39,6 @@ export class ArchitectsLogo extends Canvas {
     return `rgb(${alpha},${alpha},${alpha})`;
   }
 
-  drawUnit(x: number, y: number): void {
-    const noise = this.genereArchitectsNoise(x, y);
-    this.render.fillStyle = this.noiseToColor(noise);
-    this.render.fillRect(Math.floor(x * this.us), Math.floor(y * this.us), Math.ceil(this.us), Math.ceil(this.us));
-  }
-
   drawCircle(): void {
     this.render.beginPath();
     this.render.lineWidth = this.size / 100;
@@ -57,7 +51,9 @@ export class ArchitectsLogo extends Canvas {
     this.clear();
     for (let x = 0; x < this.upl; x++) {
       for (let y = 0; y < this.upl; y++) {
-        this.drawUnit(x, y);
+        const noise = this.genereArchitectsNoise(x, y);
+        const color = this.noiseToColor(noise);
+        this.drawUnit(x, y, color);
       }
       this.zNoiseOffset += 1;
     }

@@ -2,17 +2,23 @@
 
 .menu {
   position: fixed;
-  width: $menu - $margin;
+  width: $menuWidth - $marginWidth;
   height: 100%;
   background-color: $blockColor;
 
   .button {
-    width: $button;
-    height: $button;
-    margin: $margin;
-    background-color: $backgroundColor;
-    border-radius: $margin;
+    width: $buttonWidth;
+    height: $buttonWidth;
+    margin: $marginWidth;
+    border-radius: $marginWidth;
     cursor: pointer;
+
+    &:first-child {
+      background-image: $menuIcon;
+      &:hover {
+        background-image: $menuHoverIcon;
+      }
+    }
 
     &:hover {
       background-color: $hoverColor;

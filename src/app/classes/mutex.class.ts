@@ -51,7 +51,7 @@ export class Mutex {
           })
           .catch(err => {
             this._stopPromise(err.message, false);
-            Logger.warn(`Mutex request failed`, err);
+            Logger.warn(`[Mutex] request failed`, err);
             resolve();
           });
       } else {
@@ -70,6 +70,6 @@ export class Mutex {
 
   private _stopTimer(): void {
     this._timer.stop();
-    Logger.info(`Timer stopped`, this._timer.toString());
+    Logger.info(`[Mutex] timer stopped`, this._timer.toString());
   }
 }

@@ -1,10 +1,10 @@
 @import '../../../styles/default.scss';
 
 .block-wrapper {
-  padding: $border;
+  padding: $borderWidth;
 }
 .block {
-  padding: 2 * $padding 0;
+  padding: 2 * $paddingWidth 0;
   text-align: center;
   background-color: $blockColor;
   color: $textColor;
@@ -12,5 +12,6 @@
 
   &:hover {
     background-color: $hoverColor;
+    color: $textHoverColor;
   }
 }
