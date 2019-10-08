@@ -78,7 +78,7 @@ export class Canvas extends Looper {
 
   public drawUnit(x: number, y: number, color: string | CanvasGradient | CanvasPattern): void {
     this._render.fillStyle = color;
-    this._render.fillRect(Math.floor(x * this.us), Math.floor(y * this.us), Math.ceil(this.us), Math.ceil(this.us))
+    this._render.fillRect(Math.floor(x * this.us), Math.floor(y * this.us), Math.ceil(this.us), Math.ceil(this.us));
   }
 
   private sizeCanvas(): void {

@@ -122,15 +122,19 @@ export class Utils {
 
   /**
    * Return hypotenuse for two given points
-   *
-   * @param {number} xp x coordinate of point
-   * @param {number} yp y coordinate of point
-   * @param {number} xc x coordinate of circle
-   * @param {number} yc y coordinate of circle
-   * @returns {number} hypotenuse
    */
-  public static hypotenuse(xp: number, yp: number, xc: number, yc: number) {
-    return Math.sqrt(Math.pow(Math.abs(xp - xc), 2) + Math.pow(Math.abs(yp - yc), 2));
+  public static hypotenuse(x1: number, y1: number, x2: number, y2: number): number {
+    return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+  }
+
+  /**
+   * Return 3d hypotenuse for two given points
+   */
+  public static hypotenuse3d(x1: number, y1: number, z1: number, x2: number, y2: number, z2: number): number {
+    const dx = Math.pow(x1 - x2, 2);
+    const dy = Math.pow(y1 - y2, 2);
+    const dz = Math.pow(z1 - z2, 2);
+    return Math.sqrt(dx + dy + dz);
   }
 
   /**
