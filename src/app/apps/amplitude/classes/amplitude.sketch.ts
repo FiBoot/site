@@ -1,11 +1,35 @@
-import { P5 } from 'src/app/classes/p5.class';
+import { Canvas } from 'src/app/classes/canvas.class';
+import { Noise } from 'src/app/classes/noise.class';
 
-export class Amplitude extends P5 {
-  constructor() {
-    super();
+const DEFAULT_SIZE = 100;
+
+export class Amplitude extends Canvas {
+  readonly MAX_ALPHA: number = 255;
+  private _noise: Noise;
+  private _z: number;
+
+  constructor(wrapper: HTMLDivElement) {
+    super({ wrapper, name: 'amplitude', unitsPerLine: DEFAULT_SIZE, maxWidth: 1000, looperOption: { timespan: 5 } });
+
+    this._noise = new Noise(DEFAULT_SIZE, 1000, 50);
+    this._z = 0;
+    this.start();
   }
 
-  draw(p5): void {
-      p5.circle(30,30,20)
+  noiseToColor(noise: number): string {
+    const alpha = this.MAX_ALPHA - Math.round(this.MAX_ALPHA * noise);
+    return `rgb(${alpha},${alpha},${alpha})`;
+  }
+
+  loopCB(): void {
+    this.clear();
+    for (let y = 0; y < this.upl; y++) {
+      for (let x = 0; x < this.upl; x++) {
+        const noise = this._noise.val(x, y, this._z);
+        const color = this.noiseToColor(noise);
+        this.drawUnit(x, y, color);
+      }
+    }
+    this._z += 1;
   }
 }

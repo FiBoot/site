@@ -1,6 +1,6 @@
 import { Amplitude } from './classes/amplitude.sketch';
-import { Component } from '@angular/core';
-import { Noise } from 'src/app/classes/noise.class';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Canvas } from 'src/app/classes/canvas.class';
 
 @Component({
   selector: 'app-amplitude',
@@ -8,8 +8,16 @@ import { Noise } from 'src/app/classes/noise.class';
   styleUrls: ['./amplitude.component.scss']
 })
 export class AmplitudeComponent {
+  @ViewChild('amplitudeWrapper') wrapper: ElementRef;
+  public app: Canvas;
+
   constructor() {
-    new Amplitude();
-    const a = new Noise();
+    setTimeout(() => {
+      this.app = new Amplitude(this.wrapper.nativeElement);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.app.destory();
   }
 }

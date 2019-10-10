@@ -13,7 +13,7 @@ export class ArchitectsLogo extends Canvas {
   public terraformThreshold = 3;
 
   constructor(wrapper: HTMLDivElement) {
-    super({ wrapper, name: 'Architects-logo', maxWidth: 1000, unitsPerLine: 100 });
+    super({ wrapper, name: 'architects-logo', maxWidth: 1000, unitsPerLine: 100 });
 
     this.start();
   }
@@ -57,6 +57,7 @@ export class ArchitectsLogo extends Canvas {
       }
       this.zNoiseOffset += 1;
     }
-    this.drawCircle();
+    // feature flip?
+    // this.drawCircle();
   }
 }

@@ -1,5 +1,5 @@
 import { ArchitectsLogo } from './classes/architects-logo.class';
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Canvas } from 'src/app/classes/canvas.class';
 
 @Component({
