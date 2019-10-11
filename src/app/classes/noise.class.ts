@@ -28,48 +28,53 @@ export class Noise {
     this._density = density;
 
     Logger.info(`[Noise] generating noise array [${size}x${size}x${depth}] (density: ${density})`);
-    const loopCount = Math.pow(this._size, 2) * this._depth * Math.pow(this._density, 3);
-    const OptimizedLoopCount = Math.pow(this._size, 2) * this._depth * 27;
-    Logger.info(
-      `[Noise] estimated loop count: ${loopCount} (non-optimized :<), estimated time: ${loopCount * jsExecutionTime}sec`
-      +`\nCould be ${OptimizedLoopCount}, time: ${OptimizedLoopCount * jsExecutionTime}sec`
-    );
-
     this.genereNoiseArray();
   }
 
-  private genereNoiseArray(): void {
-    this._timer.start();
-    const points = this.genereRandomSpacialPoints();
-    this._array = new Array<Array<number>>();
-    this._maximumNoise = 0;
+  private coordToIndex(x: number, y: number, z: number): number {
+    return x + y * this._density + z * Math.pow(this._density, 2);
+  }
 
-    console.warn(points);
+  private getPoint(x: number, y: number, z: number, points: Array<Coord>): Coord {
+    return x >= 0 && x < this._density && y >= 0 && y < this._density ? points[this.coordToIndex(x, y, z)] : null;
+  }
 
-    for (let d = 0; d < this._depth; d++) {
-      const layer = new Array<number>();
-      const z = (d / this._depth) * this._size;
-      for (let y = 0; y < this._size; y++) {
-        for (let x = 0; x < this._size; x++) {
-          const value = this.getNoiseValue(x, y, z, points);
-          this._maximumNoise = value > this._maximumNoise ? value : this._maximumNoise;
-          layer.push(value);
-        }
-      }
-      this._array.push(layer);
-    }
-    this._timer.stop();
-    Logger.info(this._timer.toString());
+  private getZSlicePoints(x: number, y: number, z: number, points: Array<Coord>): Array<Coord> {
+    return [
+      // top line
+      this.getPoint(x - 1, y - 1, z, points),
+      this.getPoint(x, y - 1, z, points),
+      this.getPoint(x + 1, y - 1, z, points),
+      // middle line
+      this.getPoint(x - 1, y, z, points),
+      this.getPoint(x, y, z, points),
+      this.getPoint(x + 1, y, z, points),
+      // bottom line
+      this.getPoint(x - 1, y + 1, z, points),
+      this.getPoint(x, y + 1, z, points),
+      this.getPoint(x + 1, y + 1, z, points)
+    ].filter(a => a);
+  }
+
+  private getAdjacentPoints(c: Coord, points: Array<Coord>): Array<Coord> {
+    return [
+      ...this.getZSlicePoints(c.x, c.y, c.z - 1, points),
+      ...this.getZSlicePoints(c.x, c.y, c.z, points),
+      ...this.getZSlicePoints(c.x, c.y, c.z + 1, points)
+    ];
   }
 
   private getNoiseValue(x: number, y: number, z: number, points: Array<Coord>): number {
+    const cubeUnit = this._size / this._density;
+    const cube = new Coord(Math.floor(x / cubeUnit), Math.floor(y / cubeUnit), Math.floor(z / cubeUnit));
+    // only if density is enought, we calculate adjacent points
+    const adjacentPoints = this._density > 2 ? this.getAdjacentPoints(cube, points) : points;
+
     let val = -1;
-    for (let i = 0; i < points.length; i++) {
-      const dist = Utils.hypotenuse3d(x, y, z, points[i].x, points[i].y, points[i].z);
-      if (val < 0 || dist < val) {
-        val = dist;
-      }
-    }
+    adjacentPoints.forEach(p => {
+      const dist = Utils.hypotenuse3d(x, y, z, p.x, p.y, p.z);
+      val = val < 0 || dist < val ? dist : val;
+    });
     return val;
   }
 
@@ -90,6 +95,28 @@ export class Noise {
       }
     }
     return points;
+  }
+
+  private genereNoiseArray(): void {
+    this._timer.start();
+    const points = this.genereRandomSpacialPoints();
+    this._array = new Array<Array<number>>();
+    this._maximumNoise = 0;
+
+    for (let d = 0; d < this._depth; d++) {
+      const layer = new Array<number>();
+      const z = (d / this._depth) * this._size;
+      for (let y = 0; y < this._size; y++) {
+        for (let x = 0; x < this._size; x++) {
+          const value = this.getNoiseValue(x, y, z, points);
+          this._maximumNoise = value > this._maximumNoise ? value : this._maximumNoise;
+          layer.push(value);
+        }
+      }
+      this._array.push(layer);
+    }
+    this._timer.stop();
+    Logger.info(this._timer.toString());
   }
 
   val(x: number, y: number, z: number = 0): number {
