@@ -7,5 +7,8 @@ import { IBlock } from 'src/models/block.model';
   styleUrls: ['./apps.component.scss']
 })
 export class AppsComponent {
-  apps: Array<IBlock> = [{ title: 'Architects Logo', description: '', link: 'apps/architects-logo' }];
+  apps: Array<IBlock> = [
+    { title: 'Architects Logo', description: '', link: 'apps/architects-logo' },
+    { title: 'Amplitude', description: '', link: 'apps/amplitude' }
+  ];
 }

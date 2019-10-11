@@ -2,23 +2,29 @@
 
 .menu {
   position: fixed;
-  width: $menu - $margin;
+  width: $menuWidth - $marginWidth;
   height: 100%;
-  background-color: $lblack;
+  background-color: $blockColor;
 
   .button {
-    width: $button;
-    height: $button;
-    margin: $margin;
-    background-color: $black;
-    border-radius: $margin;
+    width: $buttonWidth;
+    height: $buttonWidth;
+    margin: $marginWidth;
+    border-radius: $marginWidth;
     cursor: pointer;
 
+    &:first-child {
+      background-image: $menuIcon;
+      &:hover {
+        background-image: $menuHoverIcon;
+      }
+    }
+
     &:hover {
-      background-color: $grey;
+      background-color: $hoverColor;
     }
     &:active {
-      background-color: $lgrey;
+      background-color: $activeColor;
     }
   }
 }

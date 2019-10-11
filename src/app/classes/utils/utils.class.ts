@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Logger } from '../logger.class';
 
-@Injectable()
 export class Utils {
   /**
    * Return random number with Math from 0 to max (excluded)
@@ -100,20 +99,15 @@ export class Utils {
   }
 
   /**
-   * Return the number between limit 0 - max
+   * Return the number between limit [min=0] - [max]
    *
-   * @static
-   * @param {number} num
-   * @param {number} [max=0]
+   * @param {number} num given number
+   * @param {number} [max]
    * @param {number} [min=0]
    * @returns {number}
-   * @memberof Utils
    */
-  public static reduce(num: number, max: number = 0, min: number = 0): number {
-    if (min > max) {
-      throw new Error(`Utils.contain error: min (${min}) > max (${max})`);
-    }
-    return num > min ? (max > 0 ? (num < max ? num : max) : num) : min;
+  public static reduce(num: number, max: number, min: number = 0): number {
+    return min > max ? num : num > min ? (max > 0 ? (num < max ? num : max) : num) : min;
   }
 
   /**
@@ -128,15 +122,19 @@ export class Utils {
 
   /**
    * Return hypotenuse for two given points
-   *
-   * @param {number} xp x coordinate of point
-   * @param {number} yp y coordinate of point
-   * @param {number} xc x coordinate of circle
-   * @param {number} yc y coordinate of circle
-   * @returns {number} hypotenuse
    */
-  public static hypotenuse(xp: number, yp: number, xc: number, yc: number) {
-    return Math.sqrt(Math.pow(Math.abs(xp - xc), 2) + Math.pow(Math.abs(yp - yc), 2));
+  public static hypotenuse(x1: number, y1: number, x2: number, y2: number): number {
+    return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+  }
+
+  /**
+   * Return 3d hypotenuse for two given points
+   */
+  public static hypotenuse3d(x1: number, y1: number, z1: number, x2: number, y2: number, z2: number): number {
+    const dx = Math.pow(x1 - x2, 2);
+    const dy = Math.pow(y1 - y2, 2);
+    const dz = Math.pow(z1 - z2, 2);
+    return Math.sqrt(dx + dy + dz);
   }
 
   /**
