@@ -1,4 +1,4 @@
-import { Amplitude } from './classes/amplitude.sketch';
+import { Amplitude } from './classes/amplitude.class';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Canvas } from 'src/app/classes/canvas.class';
 

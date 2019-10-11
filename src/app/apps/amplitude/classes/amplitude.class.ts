@@ -9,9 +9,9 @@ export class Amplitude extends Canvas {
   private _z: number;
 
   constructor(wrapper: HTMLDivElement) {
-    super({ wrapper, name: 'amplitude', unitsPerLine: DEFAULT_SIZE, maxWidth: 1000, looperOption: { timespan: 5 } });
+    super({ wrapper, name: 'amplitude', unitsPerLine: DEFAULT_SIZE, maxWidth: 1000, looperOption: { timespan: 100 } });
 
-    this._noise = new Noise(DEFAULT_SIZE, 1000, 50);
+    this._noise = new Noise(DEFAULT_SIZE, 100, 10);
     this._z = 0;
     this.start();
   }

@@ -3,6 +3,8 @@ import { Logger } from './logger.class';
 import { Timer } from './timer.class';
 import { Utils } from './utils/utils.class';
 
+const jsExecutionTime = 0.000000005;
+
 const DEFAULT_NOISE_SIZE = 100;
 const DEFAULT_NOISE_DEPTH = 10;
 const DEFAULT_POINT_DENSITY = 10;
@@ -26,6 +28,13 @@ export class Noise {
     this._density = density;
 
     Logger.info(`[Noise] generating noise array [${size}x${size}x${depth}] (density: ${density})`);
+    const loopCount = Math.pow(this._size, 2) * this._depth * Math.pow(this._density, 3);
+    const OptimizedLoopCount = Math.pow(this._size, 2) * this._depth * 27;
+    Logger.info(
+      `[Noise] estimated loop count: ${loopCount} (non-optimized :<), estimated time: ${loopCount * jsExecutionTime}sec`
+      +`\nCould be ${OptimizedLoopCount}, time: ${OptimizedLoopCount * jsExecutionTime}sec`
+    );
+
     this.genereNoiseArray();
   }
 
@@ -34,6 +43,8 @@ export class Noise {
     const points = this.genereRandomSpacialPoints();
     this._array = new Array<Array<number>>();
     this._maximumNoise = 0;
+
+    console.warn(points);
 
     for (let d = 0; d < this._depth; d++) {
       const layer = new Array<number>();
@@ -53,8 +64,6 @@ export class Noise {
 
   private getNoiseValue(x: number, y: number, z: number, points: Array<Coord>): number {
     let val = -1;
-    // clone and add _size to all spacial points ? (too loop array and create continuity)
-    // ^ this is the opposite of optimisation, think with modulo ?
     for (let i = 0; i < points.length; i++) {
       const dist = Utils.hypotenuse3d(x, y, z, points[i].x, points[i].y, points[i].z);
       if (val < 0 || dist < val) {
@@ -65,8 +74,22 @@ export class Noise {
   }
 
   private genereRandomSpacialPoints(): Array<Coord> {
-    const r = () => Math.random() * this._size;
-    return Utils.repeat(() => new Coord(r(), r(), r()), this._density);
+    const cubeUnit = this._size / this._density;
+    const points = new Array<Coord>();
+    for (let z = 0; z < this._density; z++) {
+      for (let y = 0; y < this._density; y++) {
+        for (let x = 0; x < this._density; x++) {
+          points.push(
+            new Coord(
+              Math.random() * cubeUnit + x * cubeUnit,
+              Math.random() * cubeUnit + y * cubeUnit,
+              Math.random() * cubeUnit + z * cubeUnit
+            )
+          );
+        }
+      }
+    }
+    return points;
   }
 
   val(x: number, y: number, z: number = 0): number {
