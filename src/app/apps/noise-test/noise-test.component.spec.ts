@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AmplitudeComponent } from './amplitude.component';
+import { NoiseTestComponent } from './noise-test.component';
 
 describe('AmplitudeComponent', () => {
-  let component: AmplitudeComponent;
-  let fixture: ComponentFixture<AmplitudeComponent>;
+  let component: NoiseTestComponent;
+  let fixture: ComponentFixture<NoiseTestComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AmplitudeComponent ]
+      declarations: [ NoiseTestComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AmplitudeComponent);
+    fixture = TestBed.createComponent(NoiseTestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

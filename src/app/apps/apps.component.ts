@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IBlock } from 'src/models/block.model';
+import { IBlock } from 'src/app/models/block.model';
 
 @Component({
   selector: 'app-apps',
@@ -9,6 +9,6 @@ import { IBlock } from 'src/models/block.model';
 export class AppsComponent {
   apps: Array<IBlock> = [
     { title: 'Architects Logo', description: '', link: 'apps/architects-logo' },
-    { title: 'Amplitude', description: '', link: 'apps/amplitude' }
+    { title: 'Noise test', description: '', link: 'apps/noise-test' }
   ];
 }

@@ -3,15 +3,15 @@ import { Noise } from 'src/app/classes/noise.class';
 
 const DEFAULT_SIZE = 100;
 
-export class Amplitude extends Canvas {
+export class NoiseTest extends Canvas {
   readonly MAX_ALPHA: number = 255;
   private _noise: Noise;
   private _z: number;
 
   constructor(wrapper: HTMLDivElement) {
-    super({ wrapper, name: 'amplitude', unitsPerLine: DEFAULT_SIZE, maxWidth: 1000, looperOption: { timespan: 30 } });
+    super({ wrapper, name: 'noise-test', unitsPerLine: DEFAULT_SIZE, maxWidth: 1000, looperOption: { timespan: 10 } });
 
-    this._noise = new Noise(DEFAULT_SIZE, 100, 3);
+    this._noise = new Noise(DEFAULT_SIZE, 500, 5);
     this._z = 0;
     this.start();
   }

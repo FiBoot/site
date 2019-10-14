@@ -3,17 +3,16 @@ import { Logger } from './logger.class';
 import { Timer } from './timer.class';
 import { Utils } from './utils/utils.class';
 
-const jsExecutionTime = 0.000000005;
-
 const DEFAULT_NOISE_SIZE = 100;
 const DEFAULT_NOISE_DEPTH = 10;
 const DEFAULT_POINT_DENSITY = 10;
 
 export class Noise {
-  private _timer: Timer = new Timer('Noise');
   private _size: number;
   private _depth: number;
   private _density: number;
+
+  private _timer: Timer = new Timer('Noise');
 
   private _array: Array<Array<number>>;
   private _maximumNoise: number;
@@ -27,7 +26,9 @@ export class Noise {
     this._depth = depth;
     this._density = density;
 
-    Logger.info(`[Noise] generating noise array [${size}x${size}x${depth}] (density: ${density})`);
+    Logger.info(
+      `[Noise] generating noise array [${this._size}x${this._size}x${this._depth}] (density: ${this._density})`
+    );
     this.genereNoiseArray();
   }
 

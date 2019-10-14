@@ -37,8 +37,6 @@ export class Canvas extends Looper {
     this._unitsPerLine = unitsPerLine;
     this._maxWidth = maxWidth;
 
-    Logger.info(`[Canvas] ${this._name} initialized with ${Utils.fixed(1000 / this._timespan, 2)} frames per second.`);
-
     // create canvas
     this._canvas = document.createElement('canvas');
     this._render = this._canvas.getContext('2d');
@@ -60,6 +58,9 @@ export class Canvas extends Looper {
 
     // on resize
     window.addEventListener('resize', (event: UIEvent) => this.sizeCanvas());
+
+    Logger.info(`[Canvas] ${this._name} initialized with ${Utils.fixed(1000 / this._timespan, 2)} frames per second.`);
+    this.sizeCanvas();
   }
 
   public destory(): void {
