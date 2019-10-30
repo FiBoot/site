@@ -152,6 +152,18 @@ export class Utils {
   }
 
   /**
+   * Calculate the average of given numbers
+   *
+   * @param {Array<number>} numbers number array
+   * @returns {number} average
+   */
+  public static average(numbers: Array<number>): number {
+    let total = 0;
+    numbers.map(n => total += n);
+    return numbers.length ? total / numbers.length : 0;
+  }
+
+  /**
    * Return locale date string of a timestamp
    *
    * @param {number} timestamp date timestamp
