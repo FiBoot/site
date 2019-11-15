@@ -84,7 +84,7 @@ export class Canvas extends Looper {
 
   private sizeCanvas(): void {
     const size = Utils.reduce(Math.floor(this._wrapper.offsetWidth), this._maxWidth);
-    if (size != this._size) {
+    if (size !== this._size) {
       this._size = size;
       this._unitSize = this._size / this._unitsPerLine;
       this._render.canvas.width = this._size;

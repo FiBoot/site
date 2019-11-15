@@ -37,7 +37,11 @@ export class Noise {
   }
 
   private getPoint(x: number, y: number, z: number, points: Array<Coord>): Coord {
-    return x >= 0 && x < this._density && y >= 0 && y < this._density ? points[this.coordToIndex(x, y, z)] : null;
+    const cubeUnit = this._size / this._density;
+    x = x < 0 ? x + this._density : x % this._density;
+    y = y < 0 ? y + this._density : y % this._density;
+    // TODO: have to emulate points at the oposite side
+    return points[this.coordToIndex(x, y, z)];
   }
 
   private getZSlicePoints(x: number, y: number, z: number, points: Array<Coord>): Array<Coord> {
@@ -122,6 +126,7 @@ export class Noise {
 
   val(x: number, y: number, z: number = 0): number {
     const index = x + y * this._size;
-    return index < Math.pow(this._size, 2) ? this._array[z % this._depth][index] / this._maximumNoise : 0;
+    const val = index < Math.pow(this._size, 2) ? this._array[z % this._depth][index] / this._maximumNoise : 0;
+    return 1 - val;
   }
 }
