@@ -12,7 +12,7 @@ import { Ng5SliderModule } from 'ng5-slider';
   declarations: [AppsComponent, ArchitectsLogoComponent, NoiseTestComponent],
   imports: [RouterModule.forChild(APPS_ROUTES), CommonModule, Ng5SliderModule, ComponentsModule]
 })
-export class AppsModule {}
+export class AppsModule { }
 
 export function loadAppsRouteModule() {
   return AppsModule;

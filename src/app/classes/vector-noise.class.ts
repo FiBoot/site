@@ -14,6 +14,7 @@ export class VectorNoise {
 
   private timer: Timer = new Timer('Noise');
 
+  private vectors: Array<Coord>;
   private array: Array<Array<number>>;
   private maximumNoise: number;
 
@@ -36,55 +37,75 @@ export class VectorNoise {
     Logger.info(
       `[Noise] generating noise array [${this.size}x${this.size}x${this.depth}] (density: ${this.density})`
     );
+
+    this.timer.start();
+    this.genereRandomSpacialPoints();
     this.genereNoiseArray();
+    this.timer.stop();
+    Logger.info(this.timer.toString());
   }
 
-  private coordToIndex(x: number, y: number, z: number): number {
-    return x + y * this.density + z * Math.pow(this.density, 2);
+  /**
+   * Cube size
+   */
+  private get cs(): number {
+    return this.size / this.density;
   }
 
-  private getNoiseValue(x: number, y: number, z: number, points: Array<Coord>): number {
-    const cubeSize = this.size / this.density;
+  private coordToIndex(x: number, y: number, z: number, d: number = this.density): number {
+    return x + y * this.density + z * Math.pow(d, 2);
+  }
+
+  private getCubeVectors(cx: number, cy: number, cz: number): [Coord, Coord, Coord, Coord] {
+    // a   b
+    // | _ |
+    // d   c
+    return [
+      this.vectors[this.coordToIndex(cx, cy, cz, this.density + 1)],
+      this.vectors[this.coordToIndex(cx, cy, cz, this.density + 1) + 1],
+      this.vectors[this.coordToIndex(cx, cy, cz, this.density + 1) + this.density + 2],
+      this.vectors[this.coordToIndex(cx, cy, cz, this.density + 1) + this.density + 1],
+    ];
+  }
+
+  private getNoiseValue(x: number, y: number, z: number): number {
+
+    this.getCubeVectors(
+      Math.floor(x / this.cs),
+      Math.floor(y / this.cs),
+      Math.floor(z / this.cs)
+    );
+
     return 0;
   }
 
   private genereRandomVector(size: number): Coord {
     const r = () => Math.random() * (size * 2) - size;
-    return new Coord(r(), r(), r());
+    return new Coord(r(), r(), r()); // TODO: is Z needed?
   }
 
-  private genereRandomSpacialPoints(): Array<Coord> {
-    const cubeSize = this.size / this.density;
-    return Utils.repeat(
-      () => this.genereRandomVector(cubeSize),
+  private genereRandomSpacialPoints(): void {
+    this.vectors = Utils.repeat<Coord>(
+      () => this.genereRandomVector(this.cs),
       Math.pow(this.density + 1, 2) * ((this.depth / this.density) + 1)
-      // Math.pow(this.density + 1, 3) // density+1³
     );
   }
 
   private genereNoiseArray(): void {
-    this.timer.start();
-    const points = this.genereRandomSpacialPoints();
     this.array = new Array<Array<number>>();
     this.maximumNoise = 0;
 
-    console.warn(points);
-
     for (let z = 0; z < this.depth; z++) {
-      // const z = Math.round((z / this.depth) * this.size);
       const layer = new Array<number>();
       for (let y = 0; y < this.size; y++) {
         for (let x = 0; x < this.size; x++) {
-          const value = this.getNoiseValue(x, y, z, points);
+          const value = this.getNoiseValue(x, y, z);
           this.maximumNoise = value > this.maximumNoise ? value : this.maximumNoise;
           layer.push(value);
         }
       }
       this.array.push(layer);
     }
-
-    this.timer.stop();
-    Logger.info(this.timer.toString());
   }
 
   val(x: number, y: number, z: number = 0): number {

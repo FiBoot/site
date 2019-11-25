@@ -177,12 +177,12 @@ export class Utils {
    * Repeat a given function x times
    * Return all results in an Array
    *
-   * @param {() => any} func given function
+   * @param {() => T} func given function
    * @param {number} [times=1] number of repetition
-   * @returns {Array<any>}
+   * @returns {Array<T>}
    */
-  public static repeat(func: () => any, times: number = 1): Array<any> {
-    const results: Array<any> = new Array<any>();
+  public static repeat<T>(func: () => T, times: number = 1): Array<T> {
+    const results = new Array<T>();
     for (; times > 0; times--) {
       results.push(func());
     }
