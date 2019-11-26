@@ -1,4 +1,4 @@
-import { NoiseTest } from './classes/noise-test.class';
+import { NoiseTest } from './noise-test.class';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Canvas } from 'src/app/classes/canvas.class';
 

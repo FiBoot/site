@@ -7,9 +7,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Ng5SliderModule } from 'ng5-slider';
+import { BoidsComponent } from './boids/boids.component';
 
 @NgModule({
-  declarations: [AppsComponent, ArchitectsLogoComponent, NoiseTestComponent],
+  declarations: [AppsComponent, ArchitectsLogoComponent, NoiseTestComponent, BoidsComponent],
   imports: [RouterModule.forChild(APPS_ROUTES), CommonModule, Ng5SliderModule, ComponentsModule]
 })
 export class AppsModule { }
