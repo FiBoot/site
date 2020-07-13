@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IBlock } from 'src/models/block.model';
+import { IBlock } from 'src/app/models/block.model';
 
 @Component({
   selector: 'app-default',
@@ -12,7 +12,7 @@ export class DefaultComponent {
   constructor() {
     this.blocks = [
       { title: 'APPS', description: 'Canvas applications', link: 'apps' },
-      { title: 'Test', description: 'test', link: 'test' },
+      // { title: 'Test', description: 'test', link: 'test' },
     ];
   }
 }

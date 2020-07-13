@@ -156,6 +156,17 @@ describe('UtilsService', () => {
     });
   });
 
+  describe('average', () => {
+    it('should return 0 with an empty array', () => {
+      const result = Utils.average([]);
+      expect(result).toEqual(0);
+    })
+    it('should return average value', () => {
+      const result = Utils.average([0, 2, 17, -2, 5, 92]);
+      expect(result).toEqual(19);
+    })
+  })
+
   describe('timestampToLocaleDate', () => {
     it('should return local date from timestamp', () => {
       const result = Utils.timestampToLocaleDate(1600000000000);

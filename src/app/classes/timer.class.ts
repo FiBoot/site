@@ -1,3 +1,4 @@
+import { Logger } from './logger.class';
 import { Utils } from './utils/utils.class';
 
 export class Timer {
@@ -31,5 +32,9 @@ export class Timer {
 
   public toString(): string {
     return `[${this.name}] Time: ${this.value}sec`;
+  }
+
+  public log(): void {
+    Logger.info(this.toString());
   }
 }

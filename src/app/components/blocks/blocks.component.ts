@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IBlock } from 'src/models/block.model';
+import { IBlock } from 'src/app/models/block.model';
 
 @Component({
   selector: 'app-blocks',
