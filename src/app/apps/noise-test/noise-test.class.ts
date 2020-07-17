@@ -10,7 +10,7 @@ export class NoiseTest extends Canvas {
   private z: number;
 
   constructor(wrapper: HTMLDivElement) {
-    super({ wrapper, name: 'noise-test', unitsPerLine: SIZE, maxWidth: 1000, looperOption: { timespan: 10 } });
+    super({ wrapper, name: 'noise-test', unitsPerLine: SIZE, looperOption: { timespan: 10 } });
 
     this.render.fillStyle = '#fff';
     this.render.font = `${this.us}px`;

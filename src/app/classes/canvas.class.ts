@@ -3,7 +3,7 @@ import { Looper, ILooperOptions } from './looper.class';
 import { Utils } from './utils/utils.class';
 
 const DEFAULT_UNITS_PER_LINE = 20;
-const DEFAULT_MAX_CANVAS_WIDTH = 600;
+const DEFAULT_MAX_CANVAS_WIDTH = 800;
 
 export class ICanvasOptions {
   wrapper: HTMLDivElement;

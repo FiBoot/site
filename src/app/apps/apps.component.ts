@@ -10,6 +10,8 @@ export class AppsComponent {
   apps: Array<IBlock> = [
     { title: 'Architects Logo', description: 'animated noise logo', link: 'apps/architects-logo' },
     { title: 'Noise test', description: '', link: 'apps/noise-test' },
-    { title: 'Boids', description: 'Bird Coherence', link: 'apps/boids' },
+    { title: 'Forgemagie', description: 'dofus forgemagie calculator', link: 'apps/forgemagie' },
+    { title: 'Sound Pad', description: 'testing frequencies', link: 'apps/sound-pad' },
+    { title: 'Boids', description: 'bird coherence', link: 'apps/boids' },
   ];
 }
