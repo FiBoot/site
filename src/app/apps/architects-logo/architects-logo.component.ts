@@ -1,4 +1,4 @@
-import { ArchitectsLogo } from './classes/architects-logo.class';
+import { ArchitectsLogo } from './architects-logo.class';
 import {
   AfterContentInit,
   Component,
