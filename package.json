@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy": "ng build --prod --output-path dist && firebase deploy"
   },
   "private": true,
   "dependencies": {
@@ -21,10 +22,12 @@
     "@angular/router": "~7.2.0",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
+    "firebase-tools": "^7.5.0",
     "jquery": "^3.4.1",
     "ng5-slider": "^1.2.4",
     "open-simplex-noise": "^1.6.0",
     "p5": "^0.9.0",
+    "pizzicato": "^0.6.4",
     "popper": "^1.0.1",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",

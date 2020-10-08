@@ -1,0 +1,44 @@
+<div class="forgemagie-wrapper">
+  <div *ngIf="loading">Loading datas...</div>
+
+  <div *ngIf="!loading && data">
+    <section *ngIf="step === 1">
+      <input
+        type="text"
+        #searchInput
+        placeholder="Search item"
+        (keyup)="filterItems(searchInput.value)"
+      />
+      <button type="submit" [disabled]="!itemSelected" (click)="nextStep()">
+        Next
+      </button>
+      &nbsp;<span *ngIf="debouncerInterval">...</span>
+
+      <ul>
+        <li
+          *ngFor="let item of items"
+          [ngClass]="{ selected: item === itemSelected }"
+          (click)="selectItem(item)"
+        >
+          [{{ item.level }}] {{ item.name }}
+        </li>
+      </ul>
+    </section>
+
+    <section *ngIf="step === 2">
+      <button type="button" (click)="prevStep()">Back</button>
+      <fieldset>
+        <legend>{{ itemSelected.name }}</legend>
+        <div *ngFor="let stat of itemSelected.statistics">
+          <div class="statistics">
+            <u>{{ getStatKey(stat) }}</u
+            >: {{ getStatValues(stat) }}
+          </div>
+          <div class="statistics">
+            <input type="text" />
+          </div>
+        </div>
+      </fieldset>
+    </section>
+  </div>
+</div>

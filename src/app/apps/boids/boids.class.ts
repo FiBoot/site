@@ -36,7 +36,7 @@ export class Boids extends Canvas {
   boids: Array<Boid>;
 
   constructor(wrapper: HTMLDivElement) {
-    super({ wrapper, name: 'boids', maxWidth: 800 });
+    super({ wrapper, name: 'boids' });
     this.boids = new Array<Boid>();
 
     this.init();

@@ -3,11 +3,15 @@ import { ArchitectsLogoComponent } from './architects-logo/architects-logo.compo
 import { BoidsComponent } from './boids/boids.component';
 import { NoiseTestComponent } from './noise-test/noise-test.component';
 import { Routes } from '@angular/router';
+import { SoundPadComponent } from './sound-pad/sound-pad.component';
+import { ForgemagieComponent } from './forgemagie/forgemagie.component';
 
 export const APPS_ROUTES: Routes = [
   { path: 'apps', component: AppsComponent },
   { path: 'apps/architects-logo', component: ArchitectsLogoComponent },
   { path: 'apps/noise-test', component: NoiseTestComponent },
+  { path: 'apps/forgemagie', component: ForgemagieComponent },
+  { path: 'apps/sound-pad', component: SoundPadComponent },
   { path: 'apps/boids', component: BoidsComponent },
   { path: 'apps/**', redirectTo: '' }
 ];

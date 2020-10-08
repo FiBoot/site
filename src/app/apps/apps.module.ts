@@ -8,12 +8,26 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Ng5SliderModule } from 'ng5-slider';
 import { BoidsComponent } from './boids/boids.component';
+import { SoundPadComponent } from './sound-pad/sound-pad.component';
+import { ForgemagieComponent } from './forgemagie/forgemagie.component';
 
 @NgModule({
-  declarations: [AppsComponent, ArchitectsLogoComponent, NoiseTestComponent, BoidsComponent],
-  imports: [RouterModule.forChild(APPS_ROUTES), CommonModule, Ng5SliderModule, ComponentsModule]
+  declarations: [
+    AppsComponent,
+    ArchitectsLogoComponent,
+    NoiseTestComponent,
+    BoidsComponent,
+    SoundPadComponent,
+    ForgemagieComponent,
+  ],
+  imports: [
+    RouterModule.forChild(APPS_ROUTES),
+    CommonModule,
+    Ng5SliderModule,
+    ComponentsModule,
+  ],
 })
-export class AppsModule { }
+export class AppsModule {}
 
 export function loadAppsRouteModule() {
   return AppsModule;

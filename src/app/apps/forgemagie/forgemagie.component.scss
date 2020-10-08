@@ -1,0 +1,47 @@
+@import '../../../styles/default.scss';
+
+.forgemagie-wrapper {
+  padding: $paddingWidth;
+
+  input {
+    margin: $marginWidth;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: $paddingWidth / 4;
+
+      &:hover {
+        background-color: $hoverColor;
+      }
+      &.selected {
+        background-color: $textHoverColor;
+      }
+    }
+  }
+
+  fieldset {
+    width: 50%;
+    margin-top: $paddingWidth / 2;
+    padding: $paddingWidth / 2;
+    background-color: $blockColor;
+
+    legend {
+      margin: 0;
+      padding: 0 $paddingWidth / 2;
+      background-color: $activeColor;
+    }
+
+    .statistics {
+      float: left;
+      width: 50%;
+
+      input {
+        width: $buttonWidth;
+      }
+    }
+  }
+}
