@@ -1,5 +1,5 @@
-import { ArchitectsLogo } from './classes/architects-logo.class';
-import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { ArchitectsLogo } from './architects-logo.class';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Canvas } from 'src/app/classes/canvas.class';
 
 @Component({
@@ -7,14 +7,14 @@ import { Canvas } from 'src/app/classes/canvas.class';
   templateUrl: './architects-logo.component.html',
   styleUrls: ['./architects-logo.component.css']
 })
-export class ArchitectsLogoComponent implements OnDestroy {
+export class ArchitectsLogoComponent implements AfterViewInit, OnDestroy {
   @ViewChild('logoWrapper') wrapper: ElementRef;
+  public loaded = false;
   public app: Canvas;
 
-  constructor() {
-    setTimeout(() => {
-      this.app = new ArchitectsLogo(this.wrapper.nativeElement);
-    });
+  ngAfterViewInit(): void {
+    this.app = new ArchitectsLogo(this.wrapper.nativeElement);
+    setTimeout(() => this.loaded = true);
   }
 
   ngOnDestroy(): void {

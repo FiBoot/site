@@ -1,5 +1,5 @@
 import { NoiseTest } from './noise-test.class';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Canvas } from 'src/app/classes/canvas.class';
 
 @Component({
@@ -7,14 +7,12 @@ import { Canvas } from 'src/app/classes/canvas.class';
   templateUrl: './noise-test.component.html',
   styleUrls: ['./noise-test.component.scss']
 })
-export class NoiseTestComponent {
+export class NoiseTestComponent implements AfterViewInit, OnDestroy {
   @ViewChild('noiseTestWrapper') wrapper: ElementRef;
   public app: Canvas;
 
-  constructor() {
-    setTimeout(() => {
-      this.app = new NoiseTest(this.wrapper.nativeElement);
-    });
+  ngAfterViewInit(): void {
+    this.app = new NoiseTest(this.wrapper.nativeElement);
   }
 
   ngOnDestroy(): void {
