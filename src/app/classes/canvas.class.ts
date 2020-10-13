@@ -48,27 +48,14 @@ export class Canvas extends Looper {
     };
 
     // on click
-    this._canvas.addEventListener('click', (event: MouseEvent) =>
-      cancelEvent(event, this.onClick(event.offsetX, event.offsetY))
-    );
-
+    this._canvas.addEventListener('click', (event: MouseEvent) => cancelEvent(event, this.onClick(event.offsetX, event.offsetY)));
     // on mouse
-    this._canvas.addEventListener('mousedown', (event: MouseEvent) =>
-      cancelEvent(event, this.onMouse(true, event.offsetX, event.offsetY))
-    );
-    this._canvas.addEventListener('mouseup', (event: MouseEvent) =>
-      cancelEvent(event, this.onMouse(false, event.offsetX, event.offsetY))
-    );
-    this._canvas.addEventListener('mousemove', (event: MouseEvent) =>
-      cancelEvent(event, this.onMouseMove(event.offsetX, event.offsetY))
-    );
-    this._canvas.addEventListener('mouseleave', (event: MouseEvent) =>
-      cancelEvent(event, this.onMouseLeave())
-    );
-
+    this._canvas.addEventListener('mousedown', (event: MouseEvent) => cancelEvent(event, this.onMouse(true, event.offsetX, event.offsetY)));
+    this._canvas.addEventListener('mouseup', (event: MouseEvent) => cancelEvent(event, this.onMouse(false, event.offsetX, event.offsetY)));
+    this._canvas.addEventListener('mousemove', (event: MouseEvent) => cancelEvent(event, this.onMouseMove(event.offsetX, event.offsetY)));
+    this._canvas.addEventListener('mouseleave', (event: MouseEvent) => cancelEvent(event, this.onMouseLeave()));
     // on wheel
     this._canvas.addEventListener('wheel', (event: WheelEvent) => this.onScroll(event.deltaY > 0));
-
     // on resize
     window.addEventListener('resize', (event: UIEvent) => this.sizeCanvas());
 

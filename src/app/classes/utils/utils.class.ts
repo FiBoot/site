@@ -1,5 +1,3 @@
-import { Logger } from '../logger.class';
-
 export class Utils {
   /**
    * Return random number with Math from 0 to max (excluded)
