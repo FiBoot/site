@@ -42,16 +42,29 @@ export class Canvas extends Looper {
     this._render = this._canvas.getContext('2d');
     this._wrapper.append(this._canvas);
 
+    const cancelEvent = (event: MouseEvent, cb) => {
+      event.preventDefault()
+      return cb;
+    };
+
     // on click
-    this._canvas.addEventListener('click', (event: MouseEvent) => this.onClick(event.offsetX, event.offsetY));
+    this._canvas.addEventListener('click', (event: MouseEvent) =>
+      cancelEvent(event, this.onClick(event.offsetX, event.offsetY))
+    );
 
     // on mouse
-    this._canvas.addEventListener('mousedown', (event: MouseEvent) => this.onMouse(true, event.offsetX, event.offsetY));
-    this._canvas.addEventListener('mouseup', (event: MouseEvent) => this.onMouse(false, event.offsetX, event.offsetY));
-    this._canvas.addEventListener('mouseleave', (event: MouseEvent) =>
-      this.onMouse(false, event.offsetX, event.offsetY)
+    this._canvas.addEventListener('mousedown', (event: MouseEvent) =>
+      cancelEvent(event, this.onMouse(true, event.offsetX, event.offsetY))
     );
-    this._canvas.addEventListener('mousemove', (event: MouseEvent) => this.onMouseMove(event.offsetX, event.offsetY));
+    this._canvas.addEventListener('mouseup', (event: MouseEvent) =>
+      cancelEvent(event, this.onMouse(false, event.offsetX, event.offsetY))
+    );
+    this._canvas.addEventListener('mousemove', (event: MouseEvent) =>
+      cancelEvent(event, this.onMouseMove(event.offsetX, event.offsetY))
+    );
+    this._canvas.addEventListener('mouseleave', (event: MouseEvent) =>
+      cancelEvent(event, this.onMouseLeave())
+    );
 
     // on wheel
     this._canvas.addEventListener('wheel', (event: WheelEvent) => this.onScroll(event.deltaY > 0));
@@ -130,9 +143,10 @@ export class Canvas extends Looper {
     this.sizeCanvas();
   }
 
-  protected onResize(): void {}
-  protected onClick(x: number, y: number): void {}
-  protected onScroll(up: boolean): void {}
-  protected onMouse(pressed: boolean, x: number, y: number): void {}
-  protected onMouseMove(x: number, y: number): void {}
+  protected onResize(): void { }
+  protected onClick(x: number, y: number): void { }
+  protected onScroll(up: boolean): void { }
+  protected onMouse(pressed: boolean, x: number, y: number): void { }
+  protected onMouseLeave(): void { }
+  protected onMouseMove(x: number, y: number): void { }
 }

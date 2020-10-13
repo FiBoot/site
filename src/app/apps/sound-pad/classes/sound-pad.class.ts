@@ -1,7 +1,7 @@
-import { Canvas } from 'src/app/classes/canvas.class';
 import { Sound } from './sound.class';
+import { Subject } from 'rxjs';
+import { Canvas } from 'src/app/classes/canvas.class';
 import { Utils } from 'src/app/classes/utils/utils.class';
-import { Coord } from 'src/app/classes/coord.class';
 
 const COLORS = {
   BACKGROUND: '#888',
@@ -10,6 +10,7 @@ const COLORS = {
 
 export class SoundPad extends Canvas {
   private _sound: Sound = new Sound();
+  public frequency: Subject<number | null> = new Subject();
 
   constructor(wrapper: HTMLDivElement) {
     super({ wrapper, name: 'sound-pad', looperOption: { timespan: 10 } });
@@ -19,6 +20,7 @@ export class SoundPad extends Canvas {
     this.render.fill();
 
     this.start();
+    this.frequency.subscribe(val => this._sound.setFrequency(val));
   }
 
   destroy(): void {
@@ -26,7 +28,7 @@ export class SoundPad extends Canvas {
     this.destory();
   }
 
-  loopCB(): void {}
+  loopCB(): void { }
 
   protected onMouse(pressed: boolean, x: number, y: number): void {
     pressed ? this._sound.play() : this._sound.stop();
@@ -34,25 +36,12 @@ export class SoundPad extends Canvas {
 
   protected onMouseMove(x: number, y: number): void {
     const screenXPercent = Utils.fixed((x * 100) / this.size);
-    const frequency = this.getFrequency(screenXPercent);
-    // set frequency
-    this._sound.setFrequency(frequency);
+    const frequency = this.noteToFrenquency(screenXPercent);
+    this.frequency.next(frequency);
   }
 
-  /**
-   * Draw point in given coord
-   *
-   * @private
-   * @param {Coord} coord given coord
-   * @param {string} color given color
-   * @memberof SoundPad
-   */
-  private drawPoint(point: Coord, color: string): void {
-    const radius = 1; // TODO ?
-    this.render.fillStyle = color;
-    this.render.beginPath();
-    this.render.arc(point.x, point.y, radius, 0, Math.PI * 2);
-    this.render.fill();
+  protected onMouseLeave(): void {
+    this.frequency.next(null);
   }
 
   /**
@@ -63,7 +52,7 @@ export class SoundPad extends Canvas {
    * @returns {number} note in hertz
    * @memberof SoundPad
    */
-  private getFrequency(note: number): number {
+  private noteToFrenquency(note: number): number {
     return Utils.fixed(Math.pow(2, (note - 49) / 12) * 440, 3);
   }
 }
