@@ -24,8 +24,8 @@ class Ship {
   }
 
   addVec(vec: Coord): void {
-    this.vec.x = Utils.reduce(this.vec.x + vec.x, this.MAXVELOCITY, -this.MAXVELOCITY);
-    this.vec.y = Utils.reduce(this.vec.y + vec.y, this.MAXVELOCITY, -this.MAXVELOCITY);
+    this.vec.x = Utils.fixed(Utils.reduce(this.vec.x + vec.x, this.MAXVELOCITY, -this.MAXVELOCITY), 2);
+    this.vec.y = Utils.fixed(Utils.reduce(this.vec.y + vec.y, this.MAXVELOCITY, -this.MAXVELOCITY), 2);
   }
 }
 
@@ -34,14 +34,12 @@ export class Asteroid extends Canvas {
   private ship: Ship;
   private mousePressed: boolean;
   private mousePos: Coord;
-  private vec: Coord;
 
   constructor(wrapper: HTMLDivElement) {
     super({ wrapper, name: 'asteroid', looperOption: { timespan: 30 } });
 
     this.mousePressed = false;
     this.ship = new Ship(this.size);
-    this.vec = new Coord(0, 0);
 
     this.start();
   }
@@ -53,11 +51,6 @@ export class Asteroid extends Canvas {
   onMouseMove(x: number, y: number): void {
     // set mouse pos
     this.mousePos ? this.mousePos.set(x, y) : this.mousePos = new Coord(x, y);
-    // calc vector
-    this.vec.set(
-      (x - this.ship.pos.x) / 100,
-      (y - this.ship.pos.y) / 100
-    );
   }
 
   // main loop
@@ -70,7 +63,12 @@ export class Asteroid extends Canvas {
 
   moveShip(): void {
     if (this.mousePressed) {
-      this.ship.addVec(this.vec);
+      // calc vector
+      const vec = new Coord(
+        (this.mousePos.x - this.ship.pos.x) / 100,
+        (this.mousePos.y - this.ship.pos.y) / 100,
+      );
+      this.ship.addVec(vec);
     }
     this.ship.move();
   }
