@@ -5,6 +5,7 @@ import { BoidsComponent } from './boids/boids.component';
 import { ForgemagieComponent } from './forgemagie/forgemagie.component';
 import { NoiseTestComponent } from './noise-test/noise-test.component';
 import { SoundPadComponent } from './sound-pad/sound-pad.component';
+import { WebComponent } from './web/web.component';
 import { Routes } from '@angular/router';
 
 export const APPS_ROUTES: Routes = [
@@ -15,5 +16,6 @@ export const APPS_ROUTES: Routes = [
   { path: 'apps/sound-pad', component: SoundPadComponent },
   { path: 'apps/boids', component: BoidsComponent },
   { path: 'apps/asteroid', component: AsteroidComponent },
+  { path: 'apps/web', component: WebComponent },
   { path: 'apps/**', redirectTo: '' }
 ];

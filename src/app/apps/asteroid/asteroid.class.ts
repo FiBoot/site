@@ -2,14 +2,17 @@ import { Canvas } from 'src/app/classes/canvas.class';
 import { Coord } from 'src/app/classes/coord.class';
 import { Utils } from 'src/app/classes/utils/utils.class';
 
+const RATIO = 400;
+
 enum Color {
-  SHIP = '#FAF',
+  SHIP = '#FAA',
+  SHIPLINE = '#A66',
   BG = '#000',
-  LINE = '#AAA',
+  LINE = '#EEE',
 }
 
 class Ship {
-  MAXVELOCITY: number = 10;
+  MAXVELOCITY = 5;
   pos: Coord;
   vec: Coord;
 
@@ -56,30 +59,22 @@ export class Asteroid extends Canvas {
   // main loop
   loopCB(): void {
     this.clear();
-    this.moveShip();
+    // this.moveShip();
     this.drawShip();
     this.drawVecLine();
+    this.drawReactor();
   }
 
   moveShip(): void {
     if (this.mousePressed) {
       // calc vector
       const vec = new Coord(
-        (this.mousePos.x - this.ship.pos.x) / 100,
-        (this.mousePos.y - this.ship.pos.y) / 100,
+        (this.mousePos.x - this.ship.pos.x) / RATIO,
+        (this.mousePos.y - this.ship.pos.y) / RATIO,
       );
       this.ship.addVec(vec);
     }
     this.ship.move();
-  }
-
-  drawShip(): void {
-    const radius = 5;
-    this.render.strokeStyle = Color.SHIP;
-    this.render.lineWidth = 2;
-    this.render.beginPath();
-    this.render.arc(this.ship.pos.x, this.ship.pos.y, radius, 0, 2 * Math.PI);
-    this.render.stroke();
   }
 
   clear(): void {
@@ -87,13 +82,42 @@ export class Asteroid extends Canvas {
     this.render.fillRect(0, 0, this.size, this.size);
   }
 
+  drawShip(): void {
+    const radius = 5;
+    this.render.fillStyle = Color.SHIP;
+    this.render.strokeStyle = Color.SHIPLINE;
+    this.render.lineWidth = 1;
+    this.render.beginPath();
+    this.render.arc(this.ship.pos.x, this.ship.pos.y, radius, 0, 2 * Math.PI);
+    this.render.fill();
+    this.render.stroke();
+  }
+
   drawVecLine(): void {
     if (this.mousePos) {
       this.render.strokeStyle = Color.LINE;
-      this.render.lineWidth = 1;
+      this.render.lineWidth = Utils.hypotenuse(this.ship.pos.x, this.ship.pos.y, this.mousePos.x, this.mousePos.y) / RATIO;
       this.render.beginPath();
       this.render.moveTo(this.mousePos.x, this.mousePos.y);
       this.render.lineTo(this.ship.pos.x, this.ship.pos.y);
+      this.render.stroke();
+    }
+  }
+
+  drawReactor(): void {
+    if (this.mousePressed) {
+      // console.log(
+      //   Utils.sign(this.ship.pos.x - this.mousePos.x),
+      //   Utils.sign(this.ship.pos.y - this.mousePos.y)
+      // )
+      const xLenght = Math.abs(this.ship.pos.x - this.mousePos.x);
+      const yLenght = Math.abs(this.ship.pos.y - this.mousePos.y);
+      const adjacent = Math.abs(xLenght) < Math.abs(yLenght) ? xLenght : yLenght;
+      const hypotenuse = Utils.hypotenuse(this.ship.pos.x, this.ship.pos.y, this.mousePos.x, this.mousePos.y);
+      const angle = Math.cos(adjacent / hypotenuse) * (Math.PI);
+
+      this.render.beginPath();
+      this.render.arc(this.ship.pos.x, this.ship.pos.y, 10, angle, angle + Math.PI / 2);
       this.render.stroke();
     }
   }
