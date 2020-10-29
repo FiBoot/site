@@ -1,6 +1,7 @@
 import { Logger } from './logger.class';
 import { Looper, ILooperOptions } from './looper.class';
 import { Utils } from './utils/utils.class';
+import { Coord } from './coord.class';
 
 const DEFAULT_UNITS_PER_LINE = 20;
 const DEFAULT_MAX_CANVAS_WIDTH = 800;
@@ -29,7 +30,7 @@ export class Canvas extends Looper {
     name = '',
     unitsPerLine = DEFAULT_UNITS_PER_LINE,
     maxWidth = DEFAULT_MAX_CANVAS_WIDTH,
-    looperOption = {}
+    looperOption = {},
   }: ICanvasOptions) {
     super(looperOption);
     this._wrapper = wrapper;
@@ -43,15 +44,23 @@ export class Canvas extends Looper {
     this._wrapper.append(this._canvas);
 
     // on click
-    this._canvas.addEventListener('click', (event: MouseEvent) => this.onClick(event.offsetX, event.offsetY));
+    this._canvas.addEventListener('click', (event: MouseEvent) =>
+      this.onClick(event.offsetX, event.offsetY)
+    );
 
     // on mouse
-    this._canvas.addEventListener('mousedown', (event: MouseEvent) => this.onMouse(true, event.offsetX, event.offsetY));
-    this._canvas.addEventListener('mouseup', (event: MouseEvent) => this.onMouse(false, event.offsetX, event.offsetY));
+    this._canvas.addEventListener('mousedown', (event: MouseEvent) =>
+      this.onMouse(true, event.offsetX, event.offsetY)
+    );
+    this._canvas.addEventListener('mouseup', (event: MouseEvent) =>
+      this.onMouse(false, event.offsetX, event.offsetY)
+    );
     this._canvas.addEventListener('mouseleave', (event: MouseEvent) =>
       this.onMouse(false, event.offsetX, event.offsetY)
     );
-    this._canvas.addEventListener('mousemove', (event: MouseEvent) => this.onMouseMove(event.offsetX, event.offsetY));
+    this._canvas.addEventListener('mousemove', (event: MouseEvent) =>
+      this.onMouseMove(event.offsetX, event.offsetY)
+    );
 
     // on wheel
     this._canvas.addEventListener('wheel', (event: WheelEvent) => this.onScroll(event.deltaY > 0));
@@ -59,7 +68,12 @@ export class Canvas extends Looper {
     // on resize
     window.addEventListener('resize', (event: UIEvent) => this.sizeCanvas());
 
-    Logger.info(`[Canvas] ${this._name} initialized with ${Utils.fixed(1000 / this._timespan, 2)} frames per second.`);
+    Logger.info(
+      `[Canvas] ${this._name} initialized with ${Utils.fixed(
+        1000 / this._timespan,
+        2
+      )} frames per second.`
+    );
     this.sizeCanvas();
   }
 
@@ -77,9 +91,27 @@ export class Canvas extends Looper {
     this._render.clearRect(0, 0, this._size, this._size);
   }
 
+  /**
+   * Convert a mouse point to the unit it belongs
+   *
+   * @param {Coord} point given point coord
+   * @returns {Coord} unit coord
+   * @memberof Canvas
+   */
+  public convertPointToUnit(point: Coord): Coord {
+    const x = Math.floor(point.x / this.us);
+    const y = Math.floor(point.y / this.us);
+    return new Coord(x, y);
+  }
+
   public drawUnit(x: number, y: number, color: string | CanvasGradient | CanvasPattern): void {
     this._render.fillStyle = color;
-    this._render.fillRect(Math.floor(x * this.us), Math.floor(y * this.us), Math.ceil(this.us), Math.ceil(this.us));
+    this._render.fillRect(
+      Math.floor(x * this.us),
+      Math.floor(y * this.us),
+      Math.ceil(this.us),
+      Math.ceil(this.us)
+    );
   }
 
   private sizeCanvas(): void {

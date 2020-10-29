@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Equipment } from './models/equipment.model';
 import { Statistics } from './models/statistics.model';
+import { Debouncer } from 'src/app/classes/debouncer.class';
 
 const DEBOUNCER_TIME = 500;
 
@@ -20,9 +21,11 @@ export class ForgemagieComponent implements OnInit {
   public itemSelected: any;
   public runeSelected: any;
 
-  public debouncerInterval = null;
+  private Debouncer: Debouncer = new Debouncer(this.filterItems.bind(this));
+  public debouncing: boolean = false;
 
   constructor(private http: HttpClient) {
+    this.Debouncer.loading.subscribe((status) => (this.debouncing = status));
     this.step = 1;
   }
 
@@ -32,30 +35,24 @@ export class ForgemagieComponent implements OnInit {
       // this.http
       //   .get('https://fr.dofus.dofapi.fr/equipments')
       //   .toPromise() as Promise<Array<Equipment>>,
-      this.http
-        .get('https://fr.dofus.dofapi.fr/weapons')
-        .toPromise() as Promise<Array<Equipment>>,
+      this.http.get('https://fr.dofus.dofapi.fr/weapons').toPromise() as Promise<Array<Equipment>>,
     ]).then((data) => {
       this.loading = false;
-      this.data = data
-        .reduce((acc, val) => acc.concat(val), [])
-        .sort((a, b) => a.level - b.level);
+      this.data = data.reduce((acc, val) => acc.concat(val), []).sort((a, b) => a.level - b.level);
       this.items = this.data;
     });
   }
 
-  filterItems(search: string = ''): void {
-    clearInterval(this.debouncerInterval);
+  filter(search: string = ''): void {
+    this.Debouncer.exec(search);
+  }
+
+  private filterItems(search: string = ''): void {
     if (!this.data) {
       return;
     }
-    this.debouncerInterval = setTimeout(() => {
-      search = search.toLowerCase();
-      this.items = this.data.filter(
-        (item) => item.name.toLowerCase().search(search) > -1
-      );
-      this.debouncerInterval = null;
-    }, DEBOUNCER_TIME);
+    search = search.toLowerCase();
+    this.items = this.data.filter((item) => item.name.toLowerCase().search(search) > -1);
   }
 
   selectItem(item: any): void {
@@ -79,7 +76,7 @@ export class ForgemagieComponent implements OnInit {
   }
 
   getStatValues(stat: Statistics): string {
-    const values = Object.entries(stat)[0][1]
+    const values = Object.entries(stat)[0][1];
     const [min, max] = Object.values(values);
     return `${min ? `: ${min}${max ? ` | ${max}` : ''}` : ''}`;
   }

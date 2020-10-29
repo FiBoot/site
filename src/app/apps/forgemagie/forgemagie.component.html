@@ -7,12 +7,12 @@
         type="text"
         #searchInput
         placeholder="Search item"
-        (keyup)="filterItems(searchInput.value)"
+        (keyup)="filter(searchInput.value)"
       />
       <button type="submit" [disabled]="!itemSelected" (click)="nextStep()">
         Next
       </button>
-      &nbsp;<span *ngIf="debouncerInterval">...</span>
+      &nbsp;<span *ngIf="debouncing">...</span>
 
       <ul>
         <li

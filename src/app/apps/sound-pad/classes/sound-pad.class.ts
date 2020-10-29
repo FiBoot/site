@@ -10,14 +10,12 @@ const COLORS = {
 
 export class SoundPad extends Canvas {
   private _sound: Sound = new Sound();
+  private _mousePos: Coord = new Coord(0, 0);
 
   constructor(wrapper: HTMLDivElement) {
-    super({ wrapper, name: 'sound-pad', looperOption: { timespan: 10 } });
+    super({ wrapper, name: 'sound-pad', unitsPerLine: 100, looperOption: { timespan: 20 } });
 
-    this.render.fillStyle = COLORS.BACKGROUND;
-    this.render.rect(0, 0, this.size, this.size);
-    this.render.fill();
-
+    this.drawBackground();
     this.start();
   }
 
@@ -26,7 +24,20 @@ export class SoundPad extends Canvas {
     this.destory();
   }
 
-  loopCB(): void {}
+  loopCB(): void {
+    const unit = this.convertPointToUnit(this._mousePos);
+    this.drawLine(unit.x);
+  }
+
+  private drawBackground(color: string = COLORS.BACKGROUND): void {
+    this.render.fillStyle = COLORS.BACKGROUND;
+    this.render.fillRect(0, 0, this.size, this.size);
+  }
+
+  private drawLine(x: number, color: string = COLORS.POINT): void {
+    this.render.fillStyle = color;
+    this.render.fillRect(x * this.us, 0, this.us, this.size);
+  }
 
   protected onMouse(pressed: boolean, x: number, y: number): void {
     pressed ? this._sound.play() : this._sound.stop();
@@ -37,22 +48,8 @@ export class SoundPad extends Canvas {
     const frequency = this.getFrequency(screenXPercent);
     // set frequency
     this._sound.setFrequency(frequency);
-  }
-
-  /**
-   * Draw point in given coord
-   *
-   * @private
-   * @param {Coord} coord given coord
-   * @param {string} color given color
-   * @memberof SoundPad
-   */
-  private drawPoint(point: Coord, color: string): void {
-    const radius = 1; // TODO ?
-    this.render.fillStyle = color;
-    this.render.beginPath();
-    this.render.arc(point.x, point.y, radius, 0, Math.PI * 2);
-    this.render.fill();
+    // set mouse pos
+    this._mousePos.set(x, y);
   }
 
   /**
