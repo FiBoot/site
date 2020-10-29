@@ -1,10 +1,10 @@
 import { NoiseTest } from './noise-test.class';
 import {
+  AfterContentInit,
   Component,
   ElementRef,
-  ViewChild,
-  AfterContentInit,
   OnDestroy,
+  ViewChild,
 } from '@angular/core';
 import { Canvas } from 'src/app/classes/canvas.class';
 

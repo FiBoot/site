@@ -1,10 +1,10 @@
 import { Boids } from './boids.class';
 import {
+  AfterContentInit,
   Component,
   ElementRef,
   OnDestroy,
   ViewChild,
-  AfterContentInit,
 } from '@angular/core';
 import { Canvas } from 'src/app/classes/canvas.class';
 

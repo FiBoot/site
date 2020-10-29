@@ -1,5 +1,6 @@
-import { Canvas } from 'src/app/classes/canvas.class';
 import { Sound } from './sound.class';
+import { Subject } from 'rxjs';
+import { Canvas } from 'src/app/classes/canvas.class';
 import { Utils } from 'src/app/classes/utils/utils.class';
 import { Coord } from 'src/app/classes/coord.class';
 
@@ -11,12 +12,14 @@ const COLORS = {
 export class SoundPad extends Canvas {
   private _sound: Sound = new Sound();
   private _mousePos: Coord = new Coord(0, 0);
+  public frequency: Subject<number | null> = new Subject();
 
   constructor(wrapper: HTMLDivElement) {
     super({ wrapper, name: 'sound-pad', unitsPerLine: 100, looperOption: { timespan: 20 } });
 
     this.drawBackground();
     this.start();
+    this.frequency.subscribe(val => this._sound.setFrequency(val));
   }
 
   destroy(): void {
@@ -45,11 +48,12 @@ export class SoundPad extends Canvas {
 
   protected onMouseMove(x: number, y: number): void {
     const screenXPercent = Utils.fixed((x * 100) / this.size);
-    const frequency = this.getFrequency(screenXPercent);
-    // set frequency
-    this._sound.setFrequency(frequency);
-    // set mouse pos
-    this._mousePos.set(x, y);
+    const frequency = this.noteToFrenquency(screenXPercent);
+    this.frequency.next(frequency);
+  }
+
+  protected onMouseLeave(): void {
+    this.frequency.next(null);
   }
 
   /**
@@ -60,7 +64,7 @@ export class SoundPad extends Canvas {
    * @returns {number} note in hertz
    * @memberof SoundPad
    */
-  private getFrequency(note: number): number {
+  private noteToFrenquency(note: number): number {
     return Utils.fixed(Math.pow(2, (note - 49) / 12) * 440, 3);
   }
 }

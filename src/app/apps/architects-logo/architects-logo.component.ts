@@ -1,10 +1,10 @@
-import { ArchitectsLogo } from './classes/architects-logo.class';
+import { ArchitectsLogo } from './architects-logo.class';
 import {
+  AfterContentInit,
   Component,
   ElementRef,
   OnDestroy,
   ViewChild,
-  AfterContentInit,
 } from '@angular/core';
 import { Canvas } from 'src/app/classes/canvas.class';
 
@@ -15,6 +15,7 @@ import { Canvas } from 'src/app/classes/canvas.class';
 })
 export class ArchitectsLogoComponent implements AfterContentInit, OnDestroy {
   @ViewChild('logoWrapper') wrapper: ElementRef;
+  public loaded = false;
   public app: Canvas;
 
   ngAfterContentInit(): void {

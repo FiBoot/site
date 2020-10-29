@@ -10,6 +10,8 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { BoidsComponent } from './boids/boids.component';
 import { SoundPadComponent } from './sound-pad/sound-pad.component';
 import { ForgemagieComponent } from './forgemagie/forgemagie.component';
+import { AsteroidComponent } from './asteroid/asteroid.component';
+import { WebComponent } from './web/web.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { ForgemagieComponent } from './forgemagie/forgemagie.component';
     BoidsComponent,
     SoundPadComponent,
     ForgemagieComponent,
+    AsteroidComponent,
+    WebComponent,
   ],
   imports: [
     RouterModule.forChild(APPS_ROUTES),

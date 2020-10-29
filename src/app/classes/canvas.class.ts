@@ -43,44 +43,43 @@ export class Canvas extends Looper {
     this._render = this._canvas.getContext('2d');
     this._wrapper.append(this._canvas);
 
+    const cancelEvent = (event: MouseEvent, cb) => {
+      event.preventDefault();
+      return cb;
+    };
+
     // on click
     this._canvas.addEventListener('click', (event: MouseEvent) =>
-      this.onClick(event.offsetX, event.offsetY)
+      cancelEvent(event, this.onClick(event.offsetX, event.offsetY))
     );
-
     // on mouse
     this._canvas.addEventListener('mousedown', (event: MouseEvent) =>
-      this.onMouse(true, event.offsetX, event.offsetY)
+      cancelEvent(event, this.onMouse(true, event.offsetX, event.offsetY))
     );
     this._canvas.addEventListener('mouseup', (event: MouseEvent) =>
-      this.onMouse(false, event.offsetX, event.offsetY)
-    );
-    this._canvas.addEventListener('mouseleave', (event: MouseEvent) =>
-      this.onMouse(false, event.offsetX, event.offsetY)
+      cancelEvent(event, this.onMouse(false, event.offsetX, event.offsetY))
     );
     this._canvas.addEventListener('mousemove', (event: MouseEvent) =>
-      this.onMouseMove(event.offsetX, event.offsetY)
+      cancelEvent(event, this.onMouseMove(event.offsetX, event.offsetY))
     );
-
+    this._canvas.addEventListener('mouseleave', (event: MouseEvent) =>
+      cancelEvent(event, this.onMouseLeave())
+    );
     // on wheel
     this._canvas.addEventListener('wheel', (event: WheelEvent) => this.onScroll(event.deltaY > 0));
-
     // on resize
     window.addEventListener('resize', (event: UIEvent) => this.sizeCanvas());
 
-    Logger.info(
-      `[Canvas] ${this._name} initialized with ${Utils.fixed(
-        1000 / this._timespan,
-        2
-      )} frames per second.`
-    );
+    const frames = Utils.fixed(1000 / this._timespan, 2);
+    Logger.info(`[Canvas] '${this._name}' initialized with ${frames} frames per second.`);
+
     this.sizeCanvas();
   }
 
   public destory(): void {
     this.stop();
     this._wrapper.removeChild(this._canvas);
-    Logger.info(`[Canvas] ${this._name} destroyed.`);
+    Logger.info(`[Canvas] '${this._name}' destroyed.`);
   }
 
   startCB() {
@@ -166,5 +165,6 @@ export class Canvas extends Looper {
   protected onClick(x: number, y: number): void {}
   protected onScroll(up: boolean): void {}
   protected onMouse(pressed: boolean, x: number, y: number): void {}
+  protected onMouseLeave(): void {}
   protected onMouseMove(x: number, y: number): void {}
 }
