@@ -43,7 +43,7 @@ export class Canvas extends Looper {
     this._wrapper.append(this._canvas);
 
     const cancelEvent = (event: MouseEvent, cb) => {
-      event.preventDefault()
+      event.preventDefault();
       return cb;
     };
 
@@ -59,14 +59,16 @@ export class Canvas extends Looper {
     // on resize
     window.addEventListener('resize', (event: UIEvent) => this.sizeCanvas());
 
-    Logger.info(`[Canvas] ${this._name} initialized with ${Utils.fixed(1000 / this._timespan, 2)} frames per second.`);
+    const frames = Utils.fixed(1000 / this._timespan, 2);
+    Logger.info(`[Canvas] '${this._name}' initialized with ${frames} frames per second.`);
+
     this.sizeCanvas();
   }
 
   public destory(): void {
     this.stop();
     this._wrapper.removeChild(this._canvas);
-    Logger.info(`[Canvas] ${this._name} destroyed.`);
+    Logger.info(`[Canvas] '${this._name}' destroyed.`);
   }
 
   startCB() {
