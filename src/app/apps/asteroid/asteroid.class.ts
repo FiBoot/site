@@ -59,7 +59,7 @@ export class Asteroid extends Canvas {
   // main loop
   loopCB(): void {
     this.clear();
-    // this.moveShip();
+    this.moveShip();
     this.drawShip();
     this.drawVecLine();
     this.drawReactor();

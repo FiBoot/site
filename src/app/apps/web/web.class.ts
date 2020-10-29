@@ -2,13 +2,14 @@ import { Canvas } from 'src/app/classes/canvas.class';
 import { Coord } from 'src/app/classes/coord.class';
 import { Utils } from 'src/app/classes/utils/utils.class';
 
+const MAX_POINT_COUNT = 75;
 const MAX_VELOCITY = 2;
 const MAX_POINT_SIZE = 2;
 const MAX_LINE_SIZE = 150;
 
 enum COLORS {
-  DOT = '#EE9',
-  LINE = '#AFF'
+  DOT = '#00a1f2',
+  LINE = '#ffffde'
 }
 
 class Dot {
@@ -17,10 +18,10 @@ class Dot {
   vec: Coord;
   ttl = 0;
 
-  constructor(size: number) {
+  constructor(size: number, x: number = null, y: number = null) {
     // this.size = Utils.random(MAX_POINT_SIZE) + 1;
     this.size = MAX_POINT_SIZE;
-    this.pos = new Coord(Utils.random(size), Utils.random(size));
+    this.pos = (x && y) ? new Coord(x, y) : new Coord(Utils.random(size), Utils.random(size));
     this.vec = new Coord(
       (Utils.random(MAX_VELOCITY) + 1) * (Utils.random(2) ? 1 : -1),
       (Utils.random(MAX_VELOCITY) + 1) * (Utils.random(2) ? 1 : -1),
@@ -39,9 +40,9 @@ export class Web extends Canvas {
   private mouseDot: Dot;
 
   constructor(wrapper: HTMLDivElement) {
-    super({ wrapper, name: 'web', looperOption: { timespan: 30 } });
+    super({ wrapper, name: 'web', looperOption: { timespan: 40 } });
 
-    this.genereDot(50);
+    this.genereDot(MAX_POINT_COUNT);
 
     this.start();
   }
@@ -58,6 +59,12 @@ export class Web extends Canvas {
     }
     this.mouseDot.pos.x = x;
     this.mouseDot.pos.y = y;
+  }
+
+  onMouse(pressed: boolean, x: number, y: number): void {
+    if (pressed) {
+      this.dots.push(new Dot(this.size, x, y));
+    }
   }
 
   loopCB(): void {
@@ -77,7 +84,9 @@ export class Web extends Canvas {
     if (dot.pos.x < 0 || dot.pos.x > this.size
       || dot.pos.y < 0 || dot.pos.y > this.size) {
       this.dots.splice(index, 1);
-      this.genereDot();
+      if (this.dots.length < MAX_POINT_COUNT) {
+        this.genereDot();
+      }
     }
   }
 
