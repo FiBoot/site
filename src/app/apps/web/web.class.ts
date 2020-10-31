@@ -2,14 +2,15 @@ import { Canvas } from 'src/app/classes/canvas.class';
 import { Coord } from 'src/app/classes/coord.class';
 import { Utils } from 'src/app/classes/utils/utils.class';
 
-const MAX_POINT_COUNT = 75;
-const MAX_VELOCITY = 2;
+const TIMESPAN = 20;
+const MAX_POINT_COUNT = 50;
+const MAX_VELOCITY = 150;
 const MAX_POINT_SIZE = 2;
 const MAX_LINE_SIZE = 150;
 
 enum COLORS {
-  DOT = '#00a1f2',
-  LINE = '#ffffde'
+  DOT = '#fff',
+  LINE = '#aaa',
 }
 
 class Dot {
@@ -23,8 +24,8 @@ class Dot {
     this.size = MAX_POINT_SIZE;
     this.pos = (x && y) ? new Coord(x, y) : new Coord(Utils.random(size), Utils.random(size));
     this.vec = new Coord(
-      (Utils.random(MAX_VELOCITY) + 1) * (Utils.random(2) ? 1 : -1),
-      (Utils.random(MAX_VELOCITY) + 1) * (Utils.random(2) ? 1 : -1),
+      Utils.random(MAX_VELOCITY) / 100 * (Utils.random(2) ? 1 : -1),
+      Utils.random(MAX_VELOCITY) / 100 * (Utils.random(2) ? 1 : -1),
     );
   }
 
@@ -40,7 +41,7 @@ export class Web extends Canvas {
   private mouseDot: Dot;
 
   constructor(wrapper: HTMLDivElement) {
-    super({ wrapper, name: 'web', looperOption: { timespan: 40 } });
+    super({ wrapper, name: 'web', looperOption: { timespan: TIMESPAN } });
 
     this.genereDot(MAX_POINT_COUNT);
 
@@ -115,5 +116,4 @@ export class Web extends Canvas {
       this.render.stroke();
     }
   }
-
 }
