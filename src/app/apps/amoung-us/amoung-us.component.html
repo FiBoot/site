@@ -1,0 +1,13 @@
+<button type="button" (click)="start()">Start</button>
+<span *ngIf="!running">{{ this.timer.value }}</span>
+
+<div class="nodes" *ngIf="running">
+  <div
+    *ngFor="let node of nodes"
+    class="node"
+    (click)="clickNode(node, $event)"
+    [ngClass]="{ good: node.active }"
+  >
+    {{ node.number }}
+  </div>
+</div>

@@ -4,7 +4,7 @@ import { IBlock } from 'src/app/models/block.model';
 @Component({
   selector: 'app-apps',
   templateUrl: './apps.component.html',
-  styleUrls: ['./apps.component.scss']
+  styleUrls: ['./apps.component.scss'],
 })
 export class AppsComponent {
   apps: Array<IBlock> = [
@@ -14,6 +14,7 @@ export class AppsComponent {
     { title: 'Sound Pad', description: 'testing frequencies', link: 'apps/sound-pad' },
     { title: 'Web', link: 'apps/web' },
     { title: 'Asteroid', link: 'apps/asteroid' },
+    { title: 'AmongUs', description: 'training', link: 'apps/among-us' },
     // { title: 'Boids', description: 'bird coherence', link: 'apps/boids' },
   ];
 }

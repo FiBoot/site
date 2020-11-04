@@ -1,0 +1,23 @@
+.nodes {
+  max-width: 600px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.node {
+  flex: 0 0 110px;
+  height: 60px;
+  line-height: 55px;
+  font-size: 20px;
+  text-align: center;
+  margin: 2px;
+  background-color: rgb(38, 55, 206);
+  border: 2px solid rgb(219, 181, 109);
+  cursor: pointer;
+}
+.node:hover {
+  background-color: rgb(60, 76, 221);
+}
+.node.good {
+  background-color: rgb(26, 170, 62);
+}

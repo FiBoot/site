@@ -25,7 +25,7 @@ export class Timer {
     if (this._startDate) {
       const currentDate = new Date();
       const time = (currentDate.getTime() - this._startDate.getTime()) / 1000;
-      return Utils.fixed(time, 2);
+      return Utils.fixed(time, 3);
     }
     return 0;
   }

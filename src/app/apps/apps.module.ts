@@ -12,6 +12,7 @@ import { SoundPadComponent } from './sound-pad/sound-pad.component';
 import { ForgemagieComponent } from './forgemagie/forgemagie.component';
 import { AsteroidComponent } from './asteroid/asteroid.component';
 import { WebComponent } from './web/web.component';
+import { AmoungUsComponent } from './amoung-us/amoung-us.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { WebComponent } from './web/web.component';
     ForgemagieComponent,
     AsteroidComponent,
     WebComponent,
+    AmoungUsComponent,
   ],
   imports: [
     RouterModule.forChild(APPS_ROUTES),

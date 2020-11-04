@@ -20,8 +20,7 @@ class Dot {
   ttl = 0;
 
   constructor(size: number, x: number = null, y: number = null) {
-    // this.size = Utils.random(MAX_POINT_SIZE) + 1;
-    this.size = MAX_POINT_SIZE;
+    this.size = Utils.random(MAX_POINT_SIZE) + 1;
     this.pos = (x && y) ? new Coord(x, y) : new Coord(Utils.random(size), Utils.random(size));
     this.vec = new Coord(
       Utils.random(MAX_VELOCITY) / 100 * (Utils.random(2) ? 1 : -1),
@@ -109,7 +108,7 @@ export class Web extends Canvas {
     const dist = Utils.hypotenuse(dot1.pos.x, dot1.pos.y, dot2.pos.x, dot2.pos.y);
     if (dist < MAX_LINE_SIZE) {
       this.render.strokeStyle = COLORS.LINE;
-      this.render.lineWidth = (1 - (dist / MAX_LINE_SIZE)) * (MAX_POINT_SIZE / 2);
+      this.render.lineWidth = (1 - (dist / MAX_LINE_SIZE)) * MAX_POINT_SIZE / 2;
       this.render.beginPath();
       this.render.moveTo(dot1.pos.x, dot1.pos.y);
       this.render.lineTo(dot2.pos.x, dot2.pos.y);

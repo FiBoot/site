@@ -7,6 +7,7 @@ import { NoiseTestComponent } from './noise-test/noise-test.component';
 import { SoundPadComponent } from './sound-pad/sound-pad.component';
 import { WebComponent } from './web/web.component';
 import { Routes } from '@angular/router';
+import { AmoungUsComponent } from './amoung-us/amoung-us.component';
 
 export const APPS_ROUTES: Routes = [
   { path: 'apps', component: AppsComponent },
@@ -17,5 +18,6 @@ export const APPS_ROUTES: Routes = [
   { path: 'apps/boids', component: BoidsComponent },
   { path: 'apps/asteroid', component: AsteroidComponent },
   { path: 'apps/web', component: WebComponent },
+  { path: 'apps/among-us', component: AmoungUsComponent },
   { path: 'apps/**', redirectTo: '' }
 ];
