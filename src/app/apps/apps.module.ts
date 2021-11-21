@@ -13,6 +13,7 @@ import { ForgemagieComponent } from './forgemagie/forgemagie.component';
 import { AsteroidComponent } from './asteroid/asteroid.component';
 import { WebComponent } from './web/web.component';
 import { AmoungUsComponent } from './amoung-us/amoung-us.component';
+import { JdrCombatGeneratorComponent } from './jdr-combat-generator/jdr-combat-generator.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { AmoungUsComponent } from './amoung-us/amoung-us.component';
     AsteroidComponent,
     WebComponent,
     AmoungUsComponent,
+    JdrCombatGeneratorComponent,
   ],
   imports: [
     RouterModule.forChild(APPS_ROUTES),

@@ -24,7 +24,7 @@ export class SoundPad extends Canvas {
 
   destroy(): void {
     this._sound.destroy();
-    this.destory();
+    this.destroy();
   }
 
   loopCB(): void {

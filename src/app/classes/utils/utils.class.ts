@@ -43,10 +43,10 @@ export class Utils {
    * Create an array of {size} from {factory} item
    *
    * @param {number} size size of the array
-   * @param {() => T} factory arry item factory
+   * @param {() => T = null} [factory=null] arry item factory
    * @returns {Array<T>} built array
    */
-  public static array<T>(size: number, factory: () => T): Array<T> {
+  public static array<T>(size: number, factory: () => T = null): Array<T> {
     const arr = new Array<T>();
     for (; size > 0; size--) {
       arr.push(factory());

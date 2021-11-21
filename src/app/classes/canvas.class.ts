@@ -76,7 +76,7 @@ export class Canvas extends Looper {
     this.sizeCanvas();
   }
 
-  public destory(): void {
+  public destroy(): void {
     this.stop();
     this._wrapper.removeChild(this._canvas);
     Logger.info(`[Canvas] '${this._name}' destroyed.`);

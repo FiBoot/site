@@ -16,7 +16,7 @@ export class WebComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.app.destory();
+    this.app.destroy();
   }
 
 }

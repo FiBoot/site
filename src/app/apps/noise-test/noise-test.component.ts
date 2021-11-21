@@ -22,6 +22,6 @@ export class NoiseTestComponent implements AfterContentInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.app.destory();
+    this.app.destroy();
   }
 }
