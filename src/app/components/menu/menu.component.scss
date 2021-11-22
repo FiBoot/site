@@ -1,0 +1,30 @@
+@import '../../../styles/default.scss';
+
+.menu {
+  position: fixed;
+  width: $menuWidth - $marginWidth;
+  height: 100%;
+  background-color: $blockColor;
+
+  .button {
+    width: $buttonWidth;
+    height: $buttonWidth;
+    margin: $marginWidth;
+    border-radius: $marginWidth;
+    cursor: pointer;
+
+    &:first-child {
+      background-image: $menuIcon;
+      &:hover {
+        background-image: $menuHoverIcon;
+      }
+    }
+
+    &:hover {
+      background-color: $hoverColor;
+    }
+    &:active {
+      background-color: $activeColor;
+    }
+  }
+}

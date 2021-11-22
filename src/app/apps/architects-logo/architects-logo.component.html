@@ -1,0 +1,21 @@
+<div #logoWrapper></div>
+
+<div *ngIf="loaded && app" style="max-width: 1000px">
+  <div class="mt-3">
+    <label>Noise ratio</label>
+    <ng5-slider
+      [(value)]="app.noiseRatio"
+      [options]="{ animate: false, floor: 1, ceil: 10, step: 0.25, showTicks: false }"
+    >
+    </ng5-slider>
+  </div>
+
+  <div class="mt-3">
+    <label>Terrain threshold</label>
+    <ng5-slider
+      [(value)]="app.terraformThreshold"
+      [options]="{ animate: false, floor: 1, ceil: 50, step: 1, showTicks: false }"
+    >
+    </ng5-slider>
+  </div>
+</div>
