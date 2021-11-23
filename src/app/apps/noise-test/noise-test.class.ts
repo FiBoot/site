@@ -16,7 +16,7 @@ export class NoiseTest extends Canvas {
     this.render.fillText('Generating Noise..', this.us, this.us * 2);
     // waiting for fillText 100ms
     setTimeout(() => {
-      this.noise = new Noise(SIZE, 400, 5);
+      this.noise = new Noise(SIZE, 100);
       this.z = 0;
       this.start();
     }, 100);

@@ -1,12 +1,12 @@
 import { Canvas } from 'src/app/classes/canvas.class';
-import { Noise } from 'src/app/classes/noise.class';
+import { SphereNoise } from 'src/app/classes/sphere-noise.class';
 import { Utils } from 'src/app/classes/utils/utils.class';
 
 export class ArchitectsLogo extends Canvas {
   readonly CIRCLE_SIZE_RATIO: number = 1 / 5;
   readonly MAX_ALPHA: number = 255;
 
-  private openSimplex: Noise = new Noise(100, 500, 10);
+  private openSimplex: SphereNoise = new SphereNoise(100, 500, 10);
   private zNoiseOffset = 0;
 
   public noiseRatio = 6;
