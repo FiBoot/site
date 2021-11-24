@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '../../../styles/default.scss';
 
 .forgemagie-wrapper {
@@ -12,7 +13,7 @@
     padding: 0;
 
     li {
-      padding: $paddingWidth / 4;
+      padding: math.div($paddingWidth, 4);
 
       &:hover {
         background-color: $hoverColor;
@@ -25,13 +26,13 @@
 
   fieldset {
     width: 50%;
-    margin-top: $paddingWidth / 2;
-    padding: $paddingWidth / 2;
+    margin-top: $smallPaddingWith;
+    padding: $smallPaddingWith;
     background-color: $blockColor;
 
     legend {
       margin: 0;
-      padding: 0 $paddingWidth / 2;
+      padding: 0 $smallPaddingWith;
       background-color: $activeColor;
     }
 

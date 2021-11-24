@@ -2,6 +2,7 @@ import { Logger } from './logger.class';
 import { Looper, ILooperOptions } from './looper.class';
 import { Utils } from './utils/utils.class';
 import { Coord } from './coord.class';
+import { Debouncer } from './debouncer.class';
 
 const DEFAULT_UNITS_PER_LINE = 20;
 const DEFAULT_MAX_CANVAS_WIDTH = 800;
@@ -70,10 +71,11 @@ export class Canvas extends Looper {
     // on wheel
     this._canvas.addEventListener('wheel', (event: WheelEvent) => this.onScroll(event.deltaY > 0));
     // on resize
-    window.addEventListener('resize', (event: UIEvent) => this.sizeCanvas());
+    const resizeDebouncer = new Debouncer(this.sizeCanvas.bind(this), 100);
+    window.addEventListener('resize', (event: UIEvent) => resizeDebouncer.exec());
 
     const frames = Utils.fixed(1000 / this._timespan, 2);
-    Logger.info(`[Canvas] '${this._name}' initialized with ${frames} frames per second.`);
+    Logger.log(`[Canvas] '${this._name}' initialized with ${frames} frames per second.`);
 
     this.sizeCanvas();
   }
@@ -81,7 +83,7 @@ export class Canvas extends Looper {
   public destroy(): void {
     this.stop();
     this._wrapper.removeChild(this._canvas);
-    Logger.info(`[Canvas] '${this._name}' destroyed.`);
+    Logger.log(`[Canvas] '${this._name}' destroyed.`);
   }
 
   override startCB() {

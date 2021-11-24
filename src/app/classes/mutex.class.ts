@@ -11,8 +11,8 @@ export class Mutex {
   private _timer: Timer = new Timer('Mutex');
   private _lockSubject = new Subject<boolean>();
   private _errorSubject = new Subject<any>();
-  private _lock: boolean;
-  private _error: string;
+  private _lock: boolean = false;
+  private _error: string | null = null;
 
   constructor(private timedout: boolean = true) {
     this._lockSubject.next(false);
@@ -20,7 +20,7 @@ export class Mutex {
     this._errorSubject.subscribe(next => (this._error = next));
   }
 
-  get error(): string {
+  get error(): string | null {
     return this._error;
   }
   get lock(): boolean {
@@ -35,8 +35,8 @@ export class Mutex {
       // promise timeout
       setTimeout(() => {
         if (!this.timedout && this._lock) {
-          this._stopPromise(this.TIMEDOUT_MESSAGE, false);
-          resolve();
+          this._stopPromise(this.TIMEDOUT_MESSAGE);
+          resolve(null);
         }
       }, this.PROMISE_TIMEOUT);
 
@@ -46,23 +46,23 @@ export class Mutex {
         this._timer.start();
         req(...arg)
           .then(result => {
-            this._stopPromise(null, false);
+            this._stopPromise();
             resolve(result);
           })
           .catch(err => {
-            this._stopPromise(err.message, false);
+            this._stopPromise(err.message);
             Logger.warn(`[Mutex] request failed`, err);
-            resolve();
+            resolve(null);
           });
       } else {
         // locked
         this._errorSubject.next(this.RUNNING_MESSAGE);
-        resolve();
+        resolve(null);
       }
     });
   }
 
-  private _stopPromise(message: string, lock: boolean = false): void {
+  private _stopPromise(message: string | null = null, lock: boolean = false): void {
     this._stopTimer();
     this._errorSubject.next(message);
     this._lockSubject.next(lock);
@@ -70,6 +70,6 @@ export class Mutex {
 
   private _stopTimer(): void {
     this._timer.stop();
-    Logger.info(`[Mutex] timer stopped`, this._timer.toString());
+    Logger.log(`[Mutex] timer stopped`, this._timer.toString());
   }
 }

@@ -35,6 +35,6 @@ export class Timer {
   }
 
   public log(): void {
-    Logger.info(this.toString());
+    Logger.log(this.toString());
   }
 }

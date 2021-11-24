@@ -20,7 +20,7 @@ export class ArchitectsLogo extends Canvas {
 
   noise(x: number, y: number, z: number): number {
     // transforming [-1, 1] interval to [0, 1]
-    return (this.openSimplex.val(x, y, z) + 1) / 2;
+    return (this.openSimplex.get(x, y, z) + 1) / 2;
   }
 
   genereArchitectsNoise(x: number, y: number): number {

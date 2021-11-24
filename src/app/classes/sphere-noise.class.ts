@@ -26,11 +26,11 @@ export class SphereNoise {
     this._depth = depth;
     this._density = density;
 
-    Logger.info(
+    Logger.log(
       `[SphereNoise] generating noise array [${this._size}x${this._size}x${this._depth}] (density: ${this._density})...`
     );
     this.genereNoiseArray();
-    Logger.info(`[SphereNoise] Done`);
+    Logger.log(`[SphereNoise] Done`);
   }
 
   private coordToIndex(x: number, y: number, z: number): number {
@@ -122,10 +122,10 @@ export class SphereNoise {
       this._array.push(layer);
     }
     this._timer.stop();
-    Logger.info(this._timer.toString());
+    Logger.log(this._timer.toString());
   }
 
-  val(x: number, y: number, z: number = 0): number {
+  public get(x: number, y: number, z: number = 0): number {
     const index = x + y * this._size;
     const val = index < Math.pow(this._size, 2) ? this._array[z % this._depth][index] / this._maximumNoise : 0;
     return 1 - val;

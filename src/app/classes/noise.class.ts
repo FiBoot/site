@@ -16,10 +16,10 @@ export class Noise {
     private _variation: number = DEFAULT_VARIATION,
     private _precision: number = DEFAULT_PRECISION
   ) {
-    Logger.info(`[Noise] generating noise array [${this._size}x${this._size}x${this._depth}]...`);
+    Logger.log(`[Noise] generating noise array [${this._size}x${this._size}x${this._depth}]...`);
     this._array = new Array<Array<number>>();
     this.genereNoiseArray();
-    Logger.info(`[Noise] Done`);
+    Logger.log(`[Noise] Done`);
   }
 
   private getAmbiantNoiseValues(coord: Coord, layer: Array<number>): Array<number> {
@@ -65,7 +65,7 @@ export class Noise {
     console.log(this._array);
   }
 
-  public val(x: number, y: number, z: number): number {
+  public get(x: number, y: number, z: number): number {
     return this._array[z % this._depth][x + y * this._size];
   }
 }
