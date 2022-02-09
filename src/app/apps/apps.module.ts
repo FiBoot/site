@@ -12,6 +12,8 @@ import { ForgemagieComponent } from './forgemagie/forgemagie.component';
 import { AsteroidComponent } from './asteroid/asteroid.component';
 import { WebComponent } from './web/web.component';
 import { AmoungUsComponent } from './amoung-us/amoung-us.component';
+import { SatisfactoryPlannerComponent } from './satisfactory-planner/satisfactory-planner.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,10 +25,12 @@ import { AmoungUsComponent } from './amoung-us/amoung-us.component';
     AsteroidComponent,
     WebComponent,
     AmoungUsComponent,
+    SatisfactoryPlannerComponent
   ],
   imports: [
-    RouterModule.forChild(APPS_ROUTES),
     CommonModule,
+    FormsModule,
+    RouterModule.forChild(APPS_ROUTES),
     Ng5SliderModule,
     ComponentsModule,
   ],

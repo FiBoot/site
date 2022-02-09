@@ -8,6 +8,7 @@ import { IBlock } from 'src/app/models/block.model';
 })
 export class AppsComponent {
   apps: Array<IBlock> = [
+    { title: 'Satisfactory planner', link: 'apps/satisfactory-planner' },
     { title: 'Architects Logo', description: 'animated noise logo', link: 'apps/architects-logo' },
     { title: 'Noise test', link: 'apps/noise-test' },
     { title: 'Forgemagie', description: 'dofus forgemagie calculator', link: 'apps/forgemagie' },

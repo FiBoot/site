@@ -4,12 +4,14 @@ import { AsteroidComponent } from './asteroid/asteroid.component';
 import { BoidsComponent } from './boids/boids.component';
 import { ForgemagieComponent } from './forgemagie/forgemagie.component';
 import { NoiseTestComponent } from './noise-test/noise-test.component';
+import { SatisfactoryPlannerComponent } from './satisfactory-planner/satisfactory-planner.component';
 import { WebComponent } from './web/web.component';
 import { Routes } from '@angular/router';
 import { AmoungUsComponent } from './amoung-us/amoung-us.component';
 
 export const APPS_ROUTES: Routes = [
   { path: 'apps', component: AppsComponent },
+  { path: 'apps/satisfactory-planner', component: SatisfactoryPlannerComponent },
   { path: 'apps/architects-logo', component: ArchitectsLogoComponent },
   { path: 'apps/noise-test', component: NoiseTestComponent },
   { path: 'apps/forgemagie', component: ForgemagieComponent },

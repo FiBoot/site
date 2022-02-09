@@ -1,0 +1,6 @@
+<select name="building-list" [(ngModel)]="selectedBuildingId" (change)="selectBuilding()">
+    <option [value]="null">- Chose a building</option>
+    <option *ngFor="let building of buildingList" [ngValue]="building.id">{{ building.name }}</option>
+</select>
+
+<div #satisfactoryPlannerWrapper></div>
