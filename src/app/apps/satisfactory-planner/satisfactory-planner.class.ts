@@ -3,7 +3,7 @@ import { Coord } from 'src/app/classes/coord.class';
 import { Building, BUILDING_LIST } from './building.class';
 
 const enum COLOR {
-	GRID = '#555',
+	GRID = '#444',
 	GRID_LINE = '#999',
 	BUILDING = '#099',
 	BUILDING_OUTLINE = '#FFF',

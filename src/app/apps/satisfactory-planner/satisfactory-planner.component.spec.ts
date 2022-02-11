@@ -5,7 +5,7 @@ describe('SatisfactoryPlanner', () => {
 	let component: SatisfactoryPlannerComponent;
 	let fixture: ComponentFixture<SatisfactoryPlannerComponent>;
 
-	beforeEach(waitForwaitForAsync()) => {
+	beforeEach(waitForAsync()) => {
 		TestBed.configureTestingModule({
 			declarations: [SatisfactoryPlannerComponent],
 		}).compileComponents();
