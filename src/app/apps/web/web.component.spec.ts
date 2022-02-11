@@ -6,7 +6,7 @@ describe('WebComponent', () => {
   let component: WebComponent;
   let fixture: ComponentFixture<WebComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(waitForwaitForAsync()) => {
     TestBed.configureTestingModule({
       declarations: [ WebComponent ]
     })

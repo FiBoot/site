@@ -6,7 +6,7 @@ describe('ForgemagieComponent', () => {
   let component: ForgemagieComponent;
   let fixture: ComponentFixture<ForgemagieComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync()) => {
     TestBed.configureTestingModule({
       declarations: [ ForgemagieComponent ]
     })

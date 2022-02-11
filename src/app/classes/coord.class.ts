@@ -11,6 +11,10 @@ export class Coord {
     return new Coord(this.x + coord.x, this.y + coord.y, this.z + coord.z);
   }
 
+  public clone(): Coord {
+    return new Coord(this.x, this.y, this.z);
+  }
+
   public toString = (): string => {
     return `${this.x}, ${this.y} , ${this.z}`;
   };

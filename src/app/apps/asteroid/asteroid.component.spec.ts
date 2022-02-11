@@ -6,7 +6,7 @@ describe('AsteroidComponent', () => {
   let component: AsteroidComponent;
   let fixture: ComponentFixture<AsteroidComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync()) => {
     TestBed.configureTestingModule({
       declarations: [ AsteroidComponent ]
     })

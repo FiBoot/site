@@ -1,74 +1,93 @@
-import { Canvas } from "src/app/classes/canvas.class";
-import { Coord } from "src/app/classes/coord.class";
-import { Building } from "./building.class";
+import { Canvas } from 'src/app/classes/canvas.class';
+import { Coord } from 'src/app/classes/coord.class';
+import { Building, BUILDING_LIST } from './building.class';
 
-enum COLOR {
-    GRID = '#555',
-    BUILDING = '#999'
+const enum COLOR {
+	GRID = '#555',
+	GRID_LINE = '#999',
+	BUILDING = '#099',
+	BUILDING_OUTLINE = '#FFF',
+	MOUSEOVER = '#990',
 }
 
-export const BUILDING_LIST: Array<Building> = [
-    new Building('Constructor', [5,8]),
-    new Building('Assembler', [6, 10]),
-    new Building('Spliter', [3,3]),
-    new Building('Merger', [3,3]),
-]
+const MAP_SIZE = 80;
+const SQUARE_SIZE = 8;
+
+class PlacedBuilding {
+	constructor(public building: Building, public pos: Coord) {}
+}
 
 export class SatisfactoryPlanner extends Canvas {
-    private _selectedBuilding: Building | null = null;
-    private _mousePos: Coord = new Coord();
+	private _mousePos: Coord = new Coord();
 
-    constructor(wrapper: HTMLDivElement) {
-        super({ wrapper, name: 'satisfactory-planner', unitsPerLine: 100, looperOption: { timespan: 30 } });
-    
-        this.start();
-    }
+	private _selectedBuilding: Building | null = null;
+	private _buildings: Array<PlacedBuilding> = [];
 
-  override loopCB(): void {
-    this.clear();
-    this.drawGrid();
-    // this.drawBuildings();
-    this.drawSelectedBuilding();
-  }
+	constructor(wrapper: HTMLDivElement) {
+		super({ wrapper, name: 'satisfactory-planner', unitsPerLine: MAP_SIZE, looperOption: { timespan: 30 } });
 
-  override onMouseMove(x: number, y: number): void {
-      this._mousePos.set(x, y);
-  }
+		this.start();
+	}
 
-  private drawGrid(): void {
-        for(let i = 0; i < this.upl; i++) {
-            const u = i * this.us;
-            this.render.strokeStyle = COLOR.GRID; 
-            this.render.lineWidth = 1;
-            this.render.beginPath();
-            this.render.moveTo(u, 0)
-            this.render.lineTo(u, this.size);
-            this.render.stroke();
-            this.render.moveTo(0, u)
-            this.render.lineTo(this.size, u);
-            this.render.stroke();
-        }
-    }
+	override loopCB(): void {
+		this.clear();
+		this.drawGrid();
+		this.drawBuildings();
+		this.drawSelectedBuilding();
+	}
 
-    private drawBuildings(): void {
-    }
+	override onMouseMove(x: number, y: number): void {
+		const gap = new Coord(x % this.us, y % this.us);
+		this._mousePos.set(x - gap.x, y + (this.us - gap.y));
+	}
 
-    private drawSelectedBuilding(): void {
-        if (this._selectedBuilding) {
-            console.log(this.us)
-            this.render.beginPath();
-            this.render.strokeStyle = COLOR.BUILDING;
-            this.render.strokeRect(
-                this._mousePos.x,
-                this._mousePos.y,
-                this._selectedBuilding.size.x * this.us,
-                this._selectedBuilding.size.y * -this.us
-            )
-        }
-    }
+	override onClick(x: number, y: number): void {
+		if (this._selectedBuilding) {
+			this._buildings.push(new PlacedBuilding(this._selectedBuilding, this._mousePos.clone()));
+		}
+	}
 
-    public selectBuilding(buildingId: number): void {
-        this._selectedBuilding = BUILDING_LIST.find(b => b.id === buildingId) ?? null;
-        console.log(this._selectedBuilding)
-    }
+	private drawGrid(): void {
+		for (let i = 0; i < this.upl; i++) {
+			const u = i * this.us;
+			this.render.strokeStyle = i % SQUARE_SIZE ? COLOR.GRID : COLOR.GRID_LINE;
+			this.render.lineWidth = 1;
+			this.render.beginPath();
+			this.render.moveTo(u, 0);
+			this.render.lineTo(u, this.size);
+			this.render.stroke();
+			this.render.moveTo(0, u);
+			this.render.lineTo(this.size, u);
+			this.render.stroke();
+		}
+	}
+
+	private drawBuildings(): void {
+		for (let placedBuilding of this._buildings) {
+			this.drawBuilding(placedBuilding.building, placedBuilding.pos);
+		}
+	}
+
+	private drawSelectedBuilding(): void {
+		if (this._selectedBuilding) {
+			this.render.strokeStyle = COLOR.MOUSEOVER;
+			const pos = new Coord(this._mousePos.x + (this._selectedBuilding.isOffset ? this.hus : 0), this._mousePos.y);
+			this.drawBuilding(this._selectedBuilding, pos, COLOR.MOUSEOVER);
+		}
+	}
+
+	private drawBuilding(building: Building, pos: Coord, color: string = COLOR.BUILDING): void {
+		this.render.beginPath();
+        this.render.strokeStyle = '#fff'
+		this.render.fillStyle = color;
+		// TODO orientation
+		this.render.fillRect(pos.x, pos.y, building.size.x * this.us, building.size.y * -this.us);
+		this.render.strokeRect(pos.x, pos.y, building.size.x * this.us, building.size.y * -this.us);
+		this.render.closePath();
+	}
+
+	public selectBuilding(buildingId: number): void {
+		this._selectedBuilding = BUILDING_LIST.find((b) => b.id === buildingId) ?? null;
+		console.log(this._selectedBuilding);
+	}
 }

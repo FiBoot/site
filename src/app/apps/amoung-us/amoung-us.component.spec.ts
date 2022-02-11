@@ -6,7 +6,7 @@ describe('AmoungUsComponent', () => {
   let component: AmoungUsComponent;
   let fixture: ComponentFixture<AmoungUsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync()) => {
     TestBed.configureTestingModule({
       declarations: [ AmoungUsComponent ]
     })

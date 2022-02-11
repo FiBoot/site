@@ -6,7 +6,7 @@ describe('AmplitudeComponent', () => {
   let component: NoiseTestComponent;
   let fixture: ComponentFixture<NoiseTestComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync()) => {
     TestBed.configureTestingModule({
       declarations: [ NoiseTestComponent ]
     })

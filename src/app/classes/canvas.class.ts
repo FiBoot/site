@@ -153,6 +153,13 @@ export class Canvas extends Looper {
     return this._unitSize;
   }
   /**
+   * Half unit size
+   *
+   */
+  public get hus(): number {
+    return this._unitSize / 2;
+  }
+  /**
    * Unit per lines
    */
   public get upl(): number {

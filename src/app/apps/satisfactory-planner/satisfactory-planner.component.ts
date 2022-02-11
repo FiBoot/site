@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
-import { Building } from './building.class';
-import { SatisfactoryPlanner, BUILDING_LIST } from './satisfactory-planner.class';
+import { Building, BUILDING_LIST } from './building.class';
+import { SatisfactoryPlanner } from './satisfactory-planner.class';
 
 @Component({
   selector: 'satisfactory-planner',

@@ -1,25 +1,23 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { SatisfactoryPlannerComponent } from './satisfactory-planner.component';
 
-import { BoidsComponent } from './boids.component';
+describe('SatisfactoryPlanner', () => {
+	let component: SatisfactoryPlannerComponent;
+	let fixture: ComponentFixture<SatisfactoryPlannerComponent>;
 
-describe('BoidsComponent', () => {
-  let component: BoidsComponent;
-  let fixture: ComponentFixture<BoidsComponent>;
+	beforeEach(waitForwaitForAsync()) => {
+		TestBed.configureTestingModule({
+			declarations: [SatisfactoryPlannerComponent],
+		}).compileComponents();
+	}));
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ BoidsComponent ]
-    })
-    .compileComponents();
-  }));
+	beforeEach(() => {
+		fixture = TestBed.createComponent(SatisfactoryPlannerComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BoidsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });
