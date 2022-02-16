@@ -1,0 +1,29 @@
+@import '/src/styles/default.scss';
+
+.container {
+	margin-right: 0;
+	margin-left: 0;
+}
+
+.building {
+  cursor: pointer;
+}
+.building:hover {
+  background-color: $hoverColor;
+}
+.building.selected {
+  background-color: $activeColor;
+}
+
+.building > img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.building > .name {
+	text-align: center;
+	font-size: 11px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}

@@ -1,6 +1,24 @@
-<select name="building-list" [(ngModel)]="selectedBuildingId" (change)="selectBuilding()">
+<!-- <select name="building-list" [(ngModel)]="selectedBuildingId" (change)="selectBuilding()">
     <option [value]="null">- Chose a building</option>
     <option *ngFor="let building of buildingList" [ngValue]="building.id">{{ building.name }}</option>
-</select>
+</select> -->
+
+<div class="container">
+	<div class="row">
+		<div class="building col-lg-1 col-2" [ngClass]="{ 'selected': !selectedBuilding }" (click)="selectBuilding(null)">
+			<img src="TODO" alt="Delete" title="Delete" />
+			<div class="name">Delete</div>
+		</div>
+		<div
+			class="building col-lg-1 col-2"
+			*ngFor="let building of buildingList"
+			[ngClass]="{ 'selected': building === selectedBuilding }"
+			(click)="selectBuilding(building)"
+		>
+			<img src="/assets/satisfactory-planner/{{ building.name }}.png" [alt]="building.name" [title]="building.name" />
+			<div class="name">{{ building.name }}</div>
+		</div>
+	</div>
+</div>
 
 <div #satisfactoryPlannerWrapper></div>

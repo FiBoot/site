@@ -43,7 +43,7 @@ export class Canvas extends Looper {
 
     this._size = this.getCanvasSize();
     this._unitsPerLine = unitsPerLine;
-    this._unitSize = this._size / this._unitsPerLine;
+    this._unitSize = Utils.fixed(this._size / this._unitsPerLine, 2);
     this._maxWidth = maxWidth;
 
     this._wrapper.append(this._canvas);
@@ -119,7 +119,7 @@ export class Canvas extends Looper {
   private sizeCanvas(): void {
     const size = this.getCanvasSize();
     if (size !== this._size) {
-      this._size = size;
+      this._size = Utils.fixed(size, 2);
       this._unitSize = this._size / this._unitsPerLine;
       this._render.canvas.width = this._size;
       this._render.canvas.height = this._size;
@@ -137,7 +137,7 @@ export class Canvas extends Looper {
    * Half size
    */
   public get hs(): number {
-    return this.size / 2;
+    return Utils.fixed(this.size / 2, 2);
   }
   /**
    * Pow size
@@ -157,7 +157,7 @@ export class Canvas extends Looper {
    *
    */
   public get hus(): number {
-    return this._unitSize / 2;
+    return Utils.fixed(this._unitSize / 2, 2);
   }
   /**
    * Unit per lines
