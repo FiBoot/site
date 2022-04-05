@@ -1,7 +1,7 @@
 import { Canvas } from 'src/app/classes/canvas.class';
 import { Coord } from 'src/app/classes/coord.class';
 import { Utils } from 'src/app/classes/utils/utils.class';
-import { Building, BUILDING_LIST } from './building.class';
+import { Building } from './building.class';
 
 const MAP_SIZE = 80;
 const SQUARE_SIZE = 8;
@@ -13,15 +13,23 @@ const enum COLOR {
 	GRID = '#444',
 	GRID_LINE = '#999',
 	BUILDING = '#099',
+	INVALID = '#900',
 	BUILDING_OUTLINE = '#FFF',
 	MOUSEOVER = '#990',
 	UNIT = '#090',
 	DELETE = '#900',
 }
 
+const enum ORIENTATION {
+	NORTH,
+	EAST,
+	SOUTH,
+	WEST
+}
+
 class PlacedBuilding {
 	private _id: string;
-	constructor(public ref: Building, public pos: Coord) {
+	constructor(public ref: Building, public pos: Coord, public orientation: ORIENTATION = ORIENTATION.NORTH) {
 		this._id = Utils.generateId();
 	}
 	get id(): string {
@@ -31,9 +39,10 @@ class PlacedBuilding {
 
 export class SatisfactoryPlanner extends Canvas {
 	private _mousePos: Coord = new Coord();
+	private _orientation: ORIENTATION = ORIENTATION.NORTH;
 
 	private _selectedBuilding: Building | null = null;
-	private _buildings: Array<PlacedBuilding> = [];
+	private _placedBuildings: Array<PlacedBuilding> = [];
 
 	constructor(wrapper: HTMLDivElement) {
 		super({
@@ -60,12 +69,25 @@ export class SatisfactoryPlanner extends Canvas {
 	}
 
 	override onClick(x: number, y: number): void {
-		const unitPos = this.convertPointToUnit(this._mousePos);
+		const pos = this.convertPointToEventUnit(this._mousePos);
 		if (this._selectedBuilding) {
-			this._buildings.push(new PlacedBuilding(this._selectedBuilding, unitPos));
+			if (!this.isBuildingOverlapping(pos, this._selectedBuilding)) {
+				this._placedBuildings.push(new PlacedBuilding(this._selectedBuilding, pos, this._orientation));
+			}
 		} else {
-			this.deleteBuilding(unitPos);
+			this.deleteTopBuilding(pos);
 		}
+	}
+
+	override onRightClick(x: number, y: number): void {
+		this._orientation = ++this._orientation % 4;
+	}
+
+	private convertPointToEventUnit(point: Coord): Coord {
+		const unitPos = this.convertPointToUnit(this._mousePos);
+		unitPos.x = Utils.fixed(unitPos.x / 2) * 2;
+		unitPos.y = Utils.fixed(unitPos.y / 2) * 2;
+		return unitPos;
 	}
 
 	private drawGrid(): void {
@@ -84,15 +106,16 @@ export class SatisfactoryPlanner extends Canvas {
 	}
 
 	private drawBuildings(): void {
-		for (let placedBuilding of this._buildings) {
+		for (let placedBuilding of this._placedBuildings) {
 			this.drawBuilding(placedBuilding.ref, placedBuilding.pos);
 		}
 	}
 
 	private drawSelectedBuilding(): void {
 		if (this._selectedBuilding) {
-			const unitPos = this.convertPointToUnit(this._mousePos);
-			this.drawBuilding(this._selectedBuilding, unitPos, COLOR.MOUSEOVER);
+			const unitPos = this.convertPointToEventUnit(this._mousePos);
+			const color = this.isBuildingOverlapping(unitPos, this._selectedBuilding) ? COLOR.INVALID : COLOR.MOUSEOVER;
+			this.drawBuilding(this._selectedBuilding, unitPos, color);
 		}
 	}
 
@@ -123,24 +146,44 @@ export class SatisfactoryPlanner extends Canvas {
 		this.render.closePath();
 	}
 
-	private deleteBuilding(pos: Coord): boolean {
-		// reverse the array to check the last one placed in first
-		// slice to duplicate the array cause reverse is mutable
-		for (let building of this._buildings.slice().reverse()) {
+	private deleteTopBuilding(pos: Coord): void {
+		const placedBuilding = this.isPosOverlapping(pos);
+		if (placedBuilding) {
+			this._placedBuildings.splice(
+				this._placedBuildings.findIndex((b) => b.id === placedBuilding.id),
+				1
+			);
+		}
+	}
+
+	private isBuildingOverlapping(pos: Coord, building: Building): PlacedBuilding | null {
+		for (let placedBuilding of this._placedBuildings) {
 			if (
-				pos.x >= building.pos.x - building.ref.size.x &&
-				pos.x < building.pos.x + building.ref.size.x &&
-				pos.y >= building.pos.y - building.ref.size.y &&
-				pos.y < building.pos.y + building.ref.size.y
+				pos.x - building.size.x < placedBuilding.pos.x + placedBuilding.ref.size.x &&
+				pos.x + building.size.x > placedBuilding.pos.x - placedBuilding.ref.size.x &&
+				pos.y - building.size.y < placedBuilding.pos.y + placedBuilding.ref.size.y &&
+				pos.y + building.size.y > placedBuilding.pos.y - placedBuilding.ref.size.y
 			) {
-				const removed = this._buildings.splice(
-					this._buildings.findIndex((b) => b.id === building.id),
-					1
-				);
-				return removed !== [];
+				return placedBuilding;
 			}
 		}
-		return false;
+		return null;
+	}
+
+	private isPosOverlapping(pos: Coord): PlacedBuilding | null {
+		// reverse the array to check the last one placed in first
+		// slice to duplicate the array cause reverse is mutable
+		for (let placedBuilding of this._placedBuildings.slice().reverse()) {
+			if (
+				pos.x >= placedBuilding.pos.x - placedBuilding.ref.size.x &&
+				pos.x < placedBuilding.pos.x + placedBuilding.ref.size.x &&
+				pos.y >= placedBuilding.pos.y - placedBuilding.ref.size.y &&
+				pos.y < placedBuilding.pos.y + placedBuilding.ref.size.y
+			) {
+				return placedBuilding;
+			}
+		}
+		return null;
 	}
 
 	public selectBuilding(building: Building | null): void {
